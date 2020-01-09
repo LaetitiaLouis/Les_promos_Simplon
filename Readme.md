@@ -11,7 +11,7 @@ Sébastien MERCHADOU<br>
 <div align="justify"> Ce site concerne les différentes promotions de Simplon. Chaque utilisateur a la possibilité de consulter les informations concernant l'ensemble des promotions en cours ou terminées. Les apprenants et les formateurs peuvent créer leur profil ou se connecter afin d'ajouter ou modifier des informations et alimenter une galerie de photos (validées par un modérateur).</div>
 
 ## <span style="color: #778999">Présentation de la maquette</div> 
-![Lien_Maquette](https://github.com/LaetitiaLouis/Les_promos_Simplon/blob/master/Lien_Maquette_Fil_Rouge.docx)
+![Lien_Maquette](https://marvelapp.com/20350076)
 
 ## <span style="color: #778999">Présentation du MCD</div> 
 ![Image_MCD](https://github.com/LaetitiaLouis/Les_promos_Simplon/blob/master/MCD/MCD.PNG)

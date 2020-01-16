@@ -8,7 +8,7 @@ Ce site concerne les différentes promotions de Simplon. Chaque utilisateur a la
 
 ## __MCD__
 
-![Image_MCD](docs/mcd.PNG)
+![Image_MCD](docs/mcd.jpg)
 
 ---
 
@@ -20,7 +20,7 @@ https://marvelapp.com/20350076
 
 ## __Cas d'utilisation__
 
-![Image_useCases](docs/use_cases.jpg)
+![Image_useCases](docs/use_cases.jpeg)
 
 ---
 

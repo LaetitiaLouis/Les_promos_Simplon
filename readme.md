@@ -1,4 +1,4 @@
-# <center>__Les Promos Simplon__</center>
+# <p style="text-align: center;">__Les Promos Simplon__</p>
 
 ## __Description__
 Ce site concerne les différentes promotions de Simplon. Chaque utilisateur a la possibilité de consulter les informations concernant l'ensemble des promotions en cours ou terminées. Les apprenants et les formateurs peuvent créer leur profil ou se connecter afin d'ajouter ou modifier des informations et alimenter une galerie de photos (validées par un modérateur).

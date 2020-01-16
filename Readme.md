@@ -7,7 +7,7 @@ Ce site concerne les différentes promotions de Simplon. Chaque utilisateur a la
 
 ## __MCD__
 
-![Image_MCD](images/MCD.PNG)
+![Image_MCD](images/mcd.PNG)
 
 ---
 

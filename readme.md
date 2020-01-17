@@ -51,8 +51,8 @@ _Modification d'une promotion:_
 _Suppression d'une promotion:_
 - ```api/promos/delete```
 
-```api/roles/new```
-- _Création d'un nouveau rôle:_
+_Création d'un nouveau rôle:_
+- ```api/roles/new```
 
 _Suppression d'un rôle:_
  - ```api/roles/delete```

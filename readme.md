@@ -26,35 +26,36 @@ https://marvelapp.com/20350076
 
 ## __Endpoints__
 
-```api/users/new```
-- _Création d'un nouvel utilisateur_
 
-```api/users/get?id=1```
-- _Obtenir le profil de l'utilisateur ayant l'id 1_
+_Création d'un nouvel utilisateur:_
+ - ```api/users/new```
 
-```api/users/all?promo=lp4```
-- _Obenir la liste des utilisateur de la promo 4_
+_Obtenir le profil de l'utilisateur ayant l'id 1:_
+ - ```api/users/get?id=1```
 
-```api/users/edit```
-- _Modification d'un utilisateur_
+_Obenir la liste des utilisateur de la promo 4:_
+ - ```api/users/all?promo=lp4```
 
-```api/users/delete```
-- _Suppression d'un utilisateur_
+_Modification d'un utilisateur:_
+ - ```api/users/edit```
 
-```api/promos/new```
-- _Création d'une promotion_
+_Suppression d'un utilisateur:_
+- ```api/users/delete```
 
-```api/promos/edit```
-- _Modification d'une promotion_
+_Création d'une promotion:_
+- ```api/promos/new```
 
-```api/promos/delete```
-- _Suppression d'une promotion_
+_Modification d'une promotion:_
+- ```api/promos/edit```
+
+_Suppression d'une promotion:_
+- ```api/promos/delete```
 
 ```api/roles/new```
-- _Création d'un nouveau rôle_
+- _Création d'un nouveau rôle:_
 
-```api/roles/delete```
-- _Suppression d'un rôle_
+_Suppression d'un rôle:_
+ - ```api/roles/delete```
 
 ---
 

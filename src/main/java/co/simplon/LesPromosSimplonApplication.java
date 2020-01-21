@@ -10,4 +10,5 @@ public class LesPromosSimplonApplication {
 		SpringApplication.run(LesPromosSimplonApplication.class, args);
 	}
 
+
 }

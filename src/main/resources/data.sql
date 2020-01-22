@@ -54,16 +54,16 @@ insert into hobby(nom, type_hobby) values
 ('Java', 'Langage');
 
 --Utilisateur hobbyCompetenceLangange
-insert into utilisateur_hobby (utilisateur_id, hobby) values
+insert into utilisateur_hobby (utilisateurs_id, hobby) values
 (1,'Footing'),
 (1, 'Java');
 
 --Apprenant projets
-insert into apprenant_projets (apprenant_id, projets_nom) values
+insert into projet_apprenants (apprenant_id, projets_nom) values
 (1, 'Fil-rouge');
 
 --Projet langages
-insert into projet_langages (projet_nom, langages_nom) values
+insert into projet_langages (projets_nom, langages) values
 ('Fil-rouge', 'Java');
 
 

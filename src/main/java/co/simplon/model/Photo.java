@@ -2,6 +2,7 @@ package co.simplon.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,14 +20,14 @@ import lombok.Setter;
 @Setter
 public class Photo {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nom;
 	private String categorie;
 	private LocalDate datePhoto;
 	private String imageUrl;
-	@OneToOne
-	@JoinColumn(name="utilisateur_id")
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name = "utilisateur_id")
 	@JsonIgnore
 	private Utilisateur utilisateur;
 }

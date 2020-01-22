@@ -3,9 +3,8 @@ package co.simplon.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,11 +27,11 @@ public class Promo {
 	
 
 	@JsonIgnore
-	@OneToMany @JoinTable( inverseJoinColumns = {@JoinColumn(name="apprenant_id")})
+	@OneToMany (cascade = CascadeType.ALL) @JoinTable( inverseJoinColumns = {@JoinColumn(name="apprenant_id")})
 	private List<Apprenant> apprenants = new ArrayList<>();
 	
-	@ManyToMany
+	@ManyToMany (cascade = CascadeType.ALL)
 	@JsonIgnore
-	@JoinTable(inverseJoinColumns = {@JoinColumn(name="formateur_id")})
+	@JoinTable(inverseJoinColumns = { @JoinColumn(name = "formateur_id") })
 	private List<Formateur> formateurs = new ArrayList<>() ;
 }

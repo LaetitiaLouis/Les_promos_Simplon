@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,8 +27,9 @@ import lombok.Setter;
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nom;
 	private String prenom;
@@ -37,11 +40,13 @@ public class Utilisateur {
 	private String email;
 	private String pseudo;
 	private String motDePasse;
-	@OneToOne																				
+	@OneToOne (cascade = CascadeType.ALL)
 	private Role role;
-	@OneToMany
+	@OneToMany (cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Photo> photos = new ArrayList<>();
-	@OneToMany @JoinTable(name= "utilisateur_hobby", inverseJoinColumns = {@JoinColumn(name="hobby")})
+	@ManyToMany (cascade = CascadeType.ALL)
+	@JsonIgnore
+	@JoinTable(name = "utilisateur_hobby", inverseJoinColumns = { @JoinColumn(name = "hobby") })
 	private List<HobbyCompetenceLangage> hobbyCompetenceLangage = new ArrayList<>();
-	}
+}

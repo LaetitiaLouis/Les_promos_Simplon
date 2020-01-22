@@ -20,6 +20,6 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "utilisateur_id")
 public class Formateur extends Utilisateur {
 
-	@OneToMany
+	@ManyToMany(mappedBy = "formateurs")
 	private List<Promo> promos = new ArrayList<>();
 }

@@ -16,7 +16,8 @@ insert into promo (nom, annee_fin, specialite) values
 ('LP3', '2019', 'Dev Web');
 
 --Apprenants
-INSERT INTO apprenant (entite_affectation, utilisateur_id, promo_nom) VALUES ('Gradignan', 1,'LP4');
+INSERT INTO apprenant (entite_affectation, utilisateur_id, promo_nom) VALUES 
+('Gradignan', 1,'LP4');
 
 
 -- Formateurs
@@ -32,14 +33,12 @@ insert into utilisateur_photos (utilisateur_id, photos_id) values
 (1,1),
 (1,2);
 
-
-
 --Promo apprenant
 insert into promo_apprenants(promo_nom, apprenant_id) values
 ('LP4', 1);
 
 --Promo formateur
-insert into promo_formateurs(promo_nom, formateur_id) values
+insert into promo_formateurs(promos_nom, formateur_id) values
 ('LP4', 2),
 ('LP3', 2);
 
@@ -59,6 +58,13 @@ insert into utilisateur_hobby (utilisateur_id, hobby) values
 (1,'Footing'),
 (1, 'Java');
 
+--Apprenant projets
+insert into apprenant_projets (apprenant_id, projets_nom) values
+(1, 'Fil-rouge');
+
+--Projet langages
+insert into projet_langages (projet_nom, langages_nom) values
+('Fil-rouge', 'Java');
 
 
 

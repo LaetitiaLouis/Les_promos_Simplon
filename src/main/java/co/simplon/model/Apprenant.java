@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -22,5 +24,6 @@ public class Apprenant extends Utilisateur {
 	@OneToOne
 	private Promo promo;
 	@OneToMany
+	@JoinTable(joinColumns = {@JoinColumn(name="apprenant_id")})
 	private List<Projet> projets= new ArrayList<>();
 }

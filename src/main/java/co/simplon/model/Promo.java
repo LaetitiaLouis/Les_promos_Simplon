@@ -31,7 +31,7 @@ public class Promo {
 	@OneToMany @JoinTable( inverseJoinColumns = {@JoinColumn(name="apprenant_id")})
 	private List<Apprenant> apprenants = new ArrayList<>();
 	
-	@OneToMany
+	@ManyToMany
 	@JsonIgnore
 	@JoinTable(inverseJoinColumns = {@JoinColumn(name="formateur_id")})
 	private List<Formateur> formateurs = new ArrayList<>() ;

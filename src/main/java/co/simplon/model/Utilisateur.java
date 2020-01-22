@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +30,6 @@ public class Utilisateur {
 	private String email;
 	private String pseudo;
 	private String motDePasse;
-	
+	@OneToOne
+	private Role role;
 }

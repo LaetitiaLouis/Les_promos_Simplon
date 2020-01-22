@@ -1,5 +1,6 @@
 package co.simplon.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,7 +21,6 @@ public class Apprenant extends Utilisateur {
 	
 	@OneToOne
 	private Promo promo;
-	
 	@OneToMany
-	private List<Projet> projets;
+	private List<Projet> projets= new ArrayList<>();
 }

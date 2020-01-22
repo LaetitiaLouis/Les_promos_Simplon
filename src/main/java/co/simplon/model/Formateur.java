@@ -1,8 +1,10 @@
 package co.simplon.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -14,12 +16,10 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @PrimaryKeyJoinColumn(name = "utilisateur_id")
 public class Formateur extends Utilisateur {
 
-	private String attr1;
 	@OneToMany
-	private List<Promo> promos;
+	private List<Promo> promos = new ArrayList<>();
 }

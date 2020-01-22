@@ -1,6 +1,7 @@
 package co.simplon.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,10 +38,10 @@ public class Utilisateur {
 	private String pseudo;
 	private String motDePasse;
 	@OneToOne																				
-	@JoinColumn(name="role_id")
 	private Role role;
 	@OneToMany
-	private List<Photo> photos;
-	@OneToMany
-	private List<HobbyCompetenceLangage> hobbyCompetenceLangage;
+	@JsonIgnore
+	private List<Photo> photos = new ArrayList<>();
+	@OneToMany @JoinTable(name= "utilisateur_hobby", inverseJoinColumns = {@JoinColumn(name="hobby")})
+	private List<HobbyCompetenceLangage> hobbyCompetenceLangage = new ArrayList<>();
 	}

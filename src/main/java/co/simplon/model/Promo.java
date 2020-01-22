@@ -1,11 +1,14 @@
 package co.simplon.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -23,11 +26,13 @@ public class Promo {
 	private String anneeFin;
 	private String specialite;
 	
+
+	@JsonIgnore
+	@OneToMany @JoinTable( inverseJoinColumns = {@JoinColumn(name="apprenant_id")})
+	private List<Apprenant> apprenants = new ArrayList<>();
+	
 	@OneToMany
 	@JsonIgnore
-	private List<Apprenant> apprenants;
-	
-	@ManyToMany
-	@JsonIgnore
-	private List<Formateur> formateurs;
+	@JoinTable(inverseJoinColumns = {@JoinColumn(name="formateur_id")})
+	private List<Formateur> formateurs = new ArrayList<>() ;
 }

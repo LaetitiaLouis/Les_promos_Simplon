@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,5 +29,6 @@ public class Photo {
 	private String imageUrl;
 	@OneToOne
 	@JoinColumn(name="utilisateur_id")
+	@JsonIgnore
 	private Utilisateur utilisateur;
 }

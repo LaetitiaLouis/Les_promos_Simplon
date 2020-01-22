@@ -16,9 +16,7 @@ import lombok.Setter;
 @Setter
 public class Projet {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	@Id
 	private String nom;
 	private String type;
 	private String descriptif;

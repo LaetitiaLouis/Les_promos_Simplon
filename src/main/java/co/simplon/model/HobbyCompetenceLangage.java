@@ -14,6 +14,7 @@ import lombok.Setter;
 public class HobbyCompetenceLangage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String nom;
 	private String type;
 

@@ -17,6 +17,7 @@ import lombok.Setter;
 public class Apprenant extends Utilisateur {
 	
 	private String entiteAffectation;
+	
 	@OneToOne
 	private Promo promo;
 	

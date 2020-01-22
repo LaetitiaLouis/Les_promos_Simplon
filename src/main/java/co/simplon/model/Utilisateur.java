@@ -1,6 +1,7 @@
 package co.simplon.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.Getter;
@@ -30,6 +33,9 @@ public class Utilisateur {
 	private String email;
 	private String pseudo;
 	private String motDePasse;
-	@OneToOne
+	@OneToOne																				
+	@JoinColumn(name="role_id")
 	private Role role;
-}
+	@OneToMany
+	private List<Photo> photos;
+	}

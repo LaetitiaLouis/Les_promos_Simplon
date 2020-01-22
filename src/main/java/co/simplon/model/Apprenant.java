@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@PrimaryKeyJoinColumn(name = "id")
+@PrimaryKeyJoinColumn(name = "utilisateur_id")
 public class Apprenant extends Utilisateur {
 	
 	private String entiteAffectation;

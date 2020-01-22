@@ -1,6 +1,9 @@
 package co.simplon.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import lombok.AllArgsConstructor;
@@ -17,4 +20,6 @@ import lombok.Setter;
 public class Formateur extends Utilisateur {
 
 	private String attr1;
+	@OneToMany
+	private List<Promo> promos;
 }

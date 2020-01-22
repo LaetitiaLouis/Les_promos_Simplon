@@ -38,4 +38,6 @@ public class Utilisateur {
 	private Role role;
 	@OneToMany
 	private List<Photo> photos;
+	@OneToMany
+	private List<HobbyCompetenceLangage> hobbyCompetenceLangage;
 	}

@@ -2,15 +2,13 @@ package co.simplon.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +24,8 @@ public class Photo {
 	private String categorie;
 	private LocalDate datePhoto;
 	private String imageUrl;
-	@OneToOne (cascade = CascadeType.ALL)
-	@JoinColumn(name = "utilisateur_id")
-	@JsonIgnore
+	
+	@ManyToOne
+	@JsonBackReference
 	private Utilisateur utilisateur;
 }

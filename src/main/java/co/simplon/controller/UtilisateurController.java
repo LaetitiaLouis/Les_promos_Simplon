@@ -49,8 +49,13 @@ public class UtilisateurController {
 	}
 	
 	@PutMapping("/updateApprenant")
-	public Utilisateur updateApprenant(@RequestBody Apprenant modifApprenant) {
+	public Apprenant updateApprenant(@RequestBody Apprenant modifApprenant) {
 		 return utilisateurRepository.save(modifApprenant);
+	}
+	
+	@PutMapping("updateFormateur")
+	public Formateur updateFormateur(@RequestBody Formateur modifFormateur) {
+		return utilisateurRepository.save(modifFormateur);
 	}
 	
 	@GetMapping("/all")

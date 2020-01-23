@@ -17,7 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,11 +45,11 @@ public class Utilisateur {
 	private Role role;
 	
 	@OneToMany (cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Photo> photos = new ArrayList<>();
 	
 	@ManyToMany
-	@JsonManagedReference
+	@JsonIgnore
 	@JoinTable(name = "utilisateur_hobby", inverseJoinColumns = @JoinColumn(name = "hobby"))
 	private List<HobbyCompetenceLangage> hobbies = new ArrayList<>();
 }

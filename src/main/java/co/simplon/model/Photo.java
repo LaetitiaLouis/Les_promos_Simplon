@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Photo {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -26,6 +25,5 @@ public class Photo {
 	private String imageUrl;
 	
 	@ManyToOne
-	@JsonBackReference
 	private Utilisateur utilisateur;
 }

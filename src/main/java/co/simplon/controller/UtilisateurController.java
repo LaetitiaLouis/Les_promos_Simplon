@@ -48,9 +48,9 @@ public class UtilisateurController {
 		utilisateurRepository.deleteById(id);
 	}
 	
-	@PutMapping("/update")
-	public Utilisateur updateUser(@RequestBody Utilisateur modifUtilisateur) {
-		return utilisateurRepository.save(modifUtilisateur);
+	@PutMapping("/updateApprenant")
+	public Utilisateur updateApprenant(@RequestBody Apprenant modifApprenant) {
+		 return utilisateurRepository.save(modifApprenant);
 	}
 	
 	@GetMapping("/all")
@@ -58,12 +58,12 @@ public class UtilisateurController {
 		return utilisateurRepository.findAll();
 	}
 
-	
 	@GetMapping("/byProjet")
 	public ResponseEntity<?> testProj(@RequestParam String id) {
 		Optional<Projet> projet = projetRepository.findById(id);
 		if (projet.isPresent()) {
-			return  ResponseEntity.ok(projet.get());
+			Projet p  = projet.get() ;
+			return ResponseEntity.ok(p.getApprenants());
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

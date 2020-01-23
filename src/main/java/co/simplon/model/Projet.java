@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +21,8 @@ public class Projet {
 	private String descriptif;
 	
 	@ManyToMany (mappedBy = "projets")
-	@JsonBackReference
 	private List<HobbyCompetenceLangage> langages = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "projets")
-	@JsonBackReference
 	private List<Apprenant> apprenants = new ArrayList<>();
 }

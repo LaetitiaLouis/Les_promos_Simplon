@@ -21,7 +21,7 @@ INSERT INTO apprenant (entite_affectation, utilisateur_id) VALUES
 
 
 -- Formateurs
---INSERT INTO formateur (utilisateur_id) VALUES (2);
+INSERT INTO formateur (utilisateur_id) VALUES (2);
 
 --Photos
 INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values 
@@ -38,7 +38,7 @@ insert into apprenant_promo(promo_id, apprenant_id) values
 ('LP4', 1);
 
 --Promo formateur
-insert into formateur_promo(promo_id, formateur_id) values
+insert into formateur_promos(promo_id, formateur_id) values
 ('LP4', 2),
 ('LP3', 2);
 

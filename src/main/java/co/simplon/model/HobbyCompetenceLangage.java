@@ -10,8 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +25,10 @@ public class HobbyCompetenceLangage {
 	private String nom;
 	private String typeHobby;
 	
-	@JsonBackReference
 	@ManyToMany (mappedBy = "hobbies")
 	private List<Utilisateur> utilisateurs = new ArrayList<>();
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "langage_projet", joinColumns = @JoinColumn(name = "langage_id"), inverseJoinColumns = @JoinColumn(name = "projet_id"))
 	private List<Projet> projets = new ArrayList<>(); 

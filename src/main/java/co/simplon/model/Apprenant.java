@@ -10,7 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,12 +23,12 @@ public class Apprenant extends Utilisateur {
 
 	private String entiteAffectation;
 
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToOne
 	@JoinTable(name = "apprenant_promo" , joinColumns = @JoinColumn(name = "apprenant_id"), inverseJoinColumns = @JoinColumn(name = "promo_id"))
 	private Promo promo;
 
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "apprenant_projet", joinColumns = @JoinColumn(name = "apprenant_id"), inverseJoinColumns = @JoinColumn(name = "projet_id"))
 	private List<Projet> projets = new ArrayList<>();

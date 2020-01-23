@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,10 +22,8 @@ public class Promo {
 	private String specialite;
 	
 	@OneToMany(mappedBy="promo")
-	@JsonBackReference
 	private List<Apprenant> apprenants = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "promos")
-	@JsonBackReference
 	private List<Formateur> formateurs = new ArrayList<>() ;
 }

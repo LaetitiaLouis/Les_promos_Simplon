@@ -14,8 +14,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +41,7 @@ public class Utilisateur {
 	private String pseudo;
 	private String motDePasse;
 	
-	@OneToOne
+	@ManyToOne
 	private Role role;
 	
 	@OneToMany (cascade = CascadeType.ALL)

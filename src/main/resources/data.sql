@@ -16,8 +16,8 @@ insert into promo (nom, annee_fin, specialite) values
 ('LP3', '2019', 'Dev Web');
 
 --Apprenants
-INSERT INTO apprenant (entite_affectation, utilisateur_id) VALUES 
-('Gradignan', 1);
+INSERT INTO apprenant (entite_affectation, utilisateur_id, promo_nom) VALUES 
+('Gradignan', 1, 'LP4');
 
 
 -- Formateurs

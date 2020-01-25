@@ -26,4 +26,5 @@ public class Promo {
 	
 	@ManyToMany(mappedBy = "promos")
 	private List<Formateur> formateurs = new ArrayList<>() ;
+	
 }

@@ -1,5 +1,7 @@
 package co.simplon.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.simplon.model.Apprenant;
 import co.simplon.model.Formateur;
@@ -49,7 +52,8 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/newFormateur")
-	public Formateur newFormateur(@RequestBody Formateur formateur) {
+	public Formateur newFormateur(@RequestBody Formateur formateur, @RequestParam MultipartFile file) {
+		System.out.println(file.getOriginalFilename());
 		return utilisateurRepository.save(formateur);
 	}
 
@@ -100,4 +104,33 @@ public class UtilisateurController {
 			return NOT_FOUND;
 		}
 	}
+
+	@GetMapping("/byPromoFormateur")
+	public ResponseEntity<?> searchByPromoFormateur(@RequestParam String nomPromo) {
+		Optional<Promo> promo = promoRepository.findById(nomPromo);
+		if (promo.isPresent()) {
+			List<Formateur> formateurList = new ArrayList<>();
+			for (Utilisateur user : utilisateurRepository.findAll()) {
+				if (user instanceof Formateur)
+					formateurList.add((Formateur) user);
+			}
+			Iterator<Formateur> iterator = formateurList.iterator();
+			while (iterator.hasNext()) {
+				if (!iterator.next().getPromos().contains(promo.get()))
+					iterator.remove();
+			}
+			if (formateurList.isEmpty()) {
+				return NOT_FOUND;
+			} else {
+				return ResponseEntity.ok(formateurList);
+			}
+
+		} else {
+			return NOT_FOUND;
+		}
+	}
+
+
+	
+
 }

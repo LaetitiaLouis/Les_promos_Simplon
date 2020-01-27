@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,10 +37,12 @@ public class Utilisateur {
 	private LocalDate dateDeNaissance;
 	private String presentation;
 	private String commentaires;
-	private String avatarUrl;
-	private String email;
+	@Column(unique = true)
 	private String pseudo;
+	@Column(unique = true)
+	private String email;
 	private String motDePasse;
+	private String avatarUrl = "http://localhost:8080/api/photos/download/avatar.png";
 	
 	@ManyToOne
 	private Role role;

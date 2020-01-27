@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,17 +69,17 @@ public class PhotoController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/findByCategorie")
-	public ResponseEntity<?> findByCategorie(@RequestParam String categorie){
+	public ResponseEntity<?> findByCategorie(@RequestParam String categorie) {
 		List<Photo> photos = photoRepository.findByCategorie(categorie);
-		if(photos.isEmpty()) {
+		if (photos.isEmpty()) {
 			return HttpResponse.NOT_FOUND;
 		} else {
 			return ResponseEntity.ok(photos);
 		}
 	}
-	
+
 	@GetMapping("/download/{filename}")
 	public ResponseEntity<?> getImage(@PathVariable String filename) {
 		try {
@@ -87,6 +90,11 @@ public class PhotoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune photo correspondante");
 		}
 
+	}
+
+	@PutMapping("/update")
+	public @ResponseBody Photo update(@RequestBody Photo photo) {
+		return photoRepository.save(photo);
 	}
 
 }

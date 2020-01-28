@@ -1,5 +1,6 @@
 package co.simplon.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
+import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Photo;
 import co.simplon.model.Utilisateur;
+import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.PhotoRepository;
 import co.simplon.repository.UtilisateurRepository;
 
@@ -31,6 +34,9 @@ public class UtilisateurController {
 	
 	@Autowired
 	PhotoRepository photoRepository;
+	
+	@Autowired
+	HobbyCompetenceLangageRepository hobbyCompetenceLangageRepository;
 
 	@DeleteMapping("/delete")
 	public void deleteUser(@RequestParam int id) {
@@ -53,7 +59,7 @@ public class UtilisateurController {
 	}
 
 	@GetMapping("/findByPseudo")
-	public ResponseEntity<?> findByPseudo(String pseudo) {
+	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findByPseudo(pseudo);
 		if (utilisateur.isPresent()) {
 			return ResponseEntity.ok(utilisateur);
@@ -72,6 +78,22 @@ public class UtilisateurController {
 			return HttpResponse.NOT_FOUND;
 		} 
 	}
+	
+	@GetMapping("/findByHobby")
+	public ResponseEntity<?> findByHobby(@RequestParam String hobby) {
+		Optional<HobbyCompetenceLangage> h = hobbyCompetenceLangageRepository.findById(hobby);
+		if (h.isPresent()) {
+			List<Utilisateur> utilisateurs =  h.get().getUtilisateurs();
+			if (utilisateurs.isEmpty()) {
+				return HttpResponse.NOT_FOUND;
+			} else {
+				return ResponseEntity.ok(utilisateurs);
+			}
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+
 	
 	@PostMapping("/connect")
 	public ResponseEntity<String> connection(@RequestBody Utilisateur utilisateur) {

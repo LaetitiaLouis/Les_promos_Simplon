@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
 import co.simplon.model.Apprenant;
+import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
 import co.simplon.model.Promo;
+import co.simplon.model.Utilisateur;
 import co.simplon.repository.ApprenantRepository;
+import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 import co.simplon.repository.PromoRepository;
 
@@ -36,6 +39,9 @@ public class ApprenantController {
 	
 	@Autowired
 	PromoRepository promoRepository;
+	
+	@Autowired
+	HobbyCompetenceLangageRepository hobbyCompetenceLangage;
 
 	@PostMapping("/new")
 	public @ResponseBody Apprenant create(@RequestBody Apprenant apprenant) {
@@ -102,6 +108,7 @@ public class ApprenantController {
 		}
 	}
 	
+			
 	@PutMapping("/update")
 	public @ResponseBody Apprenant update(@RequestBody Apprenant apprenant) {
 		return apprenantRepository.save(apprenant);

@@ -9,5 +9,4 @@ import co.simplon.model.HobbyCompetenceLangage;
 public interface HobbyCompetenceLangageRepository extends CrudRepository <HobbyCompetenceLangage, String> {
 	
 	public List<HobbyCompetenceLangage> findByTypeHobby(String type);
-
 }

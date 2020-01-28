@@ -7,13 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
+import co.simplon.model.Apprenant;
 import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
+import co.simplon.model.Utilisateur;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
@@ -27,6 +33,22 @@ public class ProjetController {
 	
 	@Autowired
 	HobbyCompetenceLangageRepository hobbyRepository;
+	
+	
+	@GetMapping("/all")
+	public @ResponseBody Iterable<Projet> getAllProjets() {
+		return projetRepository.findAll();
+	}
+	
+	@PutMapping("/update")
+	public @ResponseBody Projet update(@RequestBody Projet projet) {
+		return projetRepository.save(projet);
+	}
+	
+	@PostMapping("/new")
+	public @ResponseBody Projet create(@RequestBody Projet projet) {
+		return projetRepository.save(projet);
+	}
 	
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam String nom){

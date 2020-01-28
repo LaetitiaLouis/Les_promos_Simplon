@@ -84,12 +84,13 @@ public class HobbyController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
+
 	@GetMapping("/findByProjet")
-	public ResponseEntity<?> findByProjet(@RequestParam String projet){
+	public ResponseEntity<?> findByProjet(@RequestParam String projet) {
 		Optional<Projet> project = projetRepository.findById(projet);
-		if(project.isPresent()) {
+		if (project.isPresent()) {
 			List<HobbyCompetenceLangage> langages = project.get().getLangages();
-			if(langages.isEmpty()) {
+			if (langages.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {
 				return ResponseEntity.ok(langages);

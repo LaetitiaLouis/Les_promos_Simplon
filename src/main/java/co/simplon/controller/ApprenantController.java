@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
 import co.simplon.model.Apprenant;
-import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
 import co.simplon.model.Promo;
-import co.simplon.model.Utilisateur;
 import co.simplon.repository.ApprenantRepository;
-import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 import co.simplon.repository.PromoRepository;
 
@@ -36,12 +33,9 @@ public class ApprenantController {
 
 	@Autowired
 	ProjetRepository projetRepository;
-	
+
 	@Autowired
 	PromoRepository promoRepository;
-	
-	@Autowired
-	HobbyCompetenceLangageRepository hobbyCompetenceLangage;
 
 	@PostMapping("/new")
 	public @ResponseBody Apprenant create(@RequestBody Apprenant apprenant) {
@@ -57,17 +51,17 @@ public class ApprenantController {
 			return ResponseEntity.ok(apprenants);
 		}
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam int id){
+	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Apprenant> apprenant = apprenantRepository.findById(id);
-		if(apprenant.isPresent()) {
+		if (apprenant.isPresent()) {
 			return ResponseEntity.ok(apprenant.get());
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
 		Optional<Apprenant> apprenant = apprenantRepository.findByPseudo(pseudo);
@@ -81,10 +75,10 @@ public class ApprenantController {
 	@GetMapping("/findByPromo")
 	public ResponseEntity<?> findbyPromo(@RequestParam String promo) {
 		Optional<Promo> p = promoRepository.findById(promo);
-		if(p.isPresent()) {
+		if (p.isPresent()) {
 			List<Apprenant> apprenants = apprenantRepository.findByPromo(p.get());
 			if (apprenants.isEmpty()) {
-			return HttpResponse.NOT_FOUND;
+				return HttpResponse.NOT_FOUND;
 			} else {
 				return ResponseEntity.ok(apprenants);
 			}
@@ -107,8 +101,7 @@ public class ApprenantController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
-			
+
 	@PutMapping("/update")
 	public @ResponseBody Apprenant update(@RequestBody Apprenant apprenant) {
 		return apprenantRepository.save(apprenant);

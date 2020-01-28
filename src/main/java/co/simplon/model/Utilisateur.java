@@ -42,7 +42,8 @@ public class Utilisateur {
 	@Column(unique = true)
 	private String email;
 	private String motDePasse;
-	private String avatarUrl = "http://localhost:8080/api/photos/download/avatar.png";
+	@Column(columnDefinition = "varchar(255) default 'http://localhost:8080/api/photos/download/avatar.png'")
+	private String avatarUrl;
 	
 	@ManyToOne
 	private Role role;

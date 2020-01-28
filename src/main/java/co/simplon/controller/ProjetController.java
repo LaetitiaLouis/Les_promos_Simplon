@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
-import co.simplon.model.Apprenant;
 import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
-import co.simplon.model.Utilisateur;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
@@ -27,45 +25,49 @@ import co.simplon.repository.ProjetRepository;
 @RequestMapping("/api/projets")
 @CrossOrigin("http://localhost:4200")
 public class ProjetController {
-	
+
 	@Autowired
 	ProjetRepository projetRepository;
-	
+
 	@Autowired
 	HobbyCompetenceLangageRepository hobbyRepository;
-	
-	
+
 	@GetMapping("/all")
-	public @ResponseBody Iterable<Projet> getAllProjets() {
-		return projetRepository.findAll();
+	public ResponseEntity<?> findAll() {
+		List<Projet> projets = (List<Projet>) projetRepository.findAll();
+		if (projets.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(projets);
+		}
 	}
-	
+
 	@PutMapping("/update")
 	public @ResponseBody Projet update(@RequestBody Projet projet) {
 		return projetRepository.save(projet);
 	}
-	
+
 	@PostMapping("/new")
 	public @ResponseBody Projet create(@RequestBody Projet projet) {
 		return projetRepository.save(projet);
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam String nom){
+	public ResponseEntity<?> findById(@RequestParam String nom) {
 		Optional<Projet> projet = projetRepository.findById(nom);
-		if(projet.isPresent()) {
+		if (projet.isPresent()) {
 			return ResponseEntity.ok(projet.get());
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/findByLangage")
-	public ResponseEntity<?> findByLangage(@RequestParam String langage){
+	public ResponseEntity<?> findByLangage(@RequestParam String langage) {
 		Optional<HobbyCompetenceLangage> lang = hobbyRepository.findById(langage);
-		if(lang.isPresent()) {
+		if (lang.isPresent()) {
 			List<Projet> projets = lang.get().getProjets();
-			if(projets.isEmpty()) {
+			if (projets.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {
 				return ResponseEntity.ok(projets);
@@ -74,5 +76,5 @@ public class ProjetController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 }

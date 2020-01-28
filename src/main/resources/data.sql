@@ -6,10 +6,10 @@ INSERT INTO role (libelle, admin) VALUES
 
 
 -- Utilisateur
-INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, avatar_url, email, mot_de_passe, pseudo, role_id)  VALUES 
-( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire','cedric.jpeg', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1),
-( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin','josselin.jpeg', 'jtobelem@simplon.co','password','jtobelem', 2),
-( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia','laetitia.jpeg',  'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1);
+INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, email, mot_de_passe, pseudo, role_id)  VALUES 
+( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1),
+( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2),
+( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1);
 
 --Promo
 insert into promo (nom, annee_fin, specialite) values 

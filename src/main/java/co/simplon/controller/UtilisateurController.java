@@ -31,10 +31,10 @@ public class UtilisateurController {
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
-	
+
 	@Autowired
 	PhotoRepository photoRepository;
-	
+
 	@Autowired
 	HobbyCompetenceLangageRepository hobbyCompetenceLangageRepository;
 
@@ -44,9 +44,9 @@ public class UtilisateurController {
 	}
 
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam int id){
+	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
-		if(utilisateur.isPresent()) {
+		if (utilisateur.isPresent()) {
 			return ResponseEntity.ok(utilisateur.get());
 		} else {
 			return HttpResponse.NOT_FOUND;
@@ -67,23 +67,23 @@ public class UtilisateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/findByPhoto")
-	public ResponseEntity<?> findByPhoto(@RequestParam int id){
+	public ResponseEntity<?> findByPhoto(@RequestParam int id) {
 		Optional<Photo> photo = photoRepository.findById(id);
-		if(photo.isPresent()) {
+		if (photo.isPresent()) {
 			Utilisateur utilisateur = photo.get().getUtilisateur();
 			return ResponseEntity.ok(utilisateur);
 		} else {
 			return HttpResponse.NOT_FOUND;
-		} 
+		}
 	}
-	
+
 	@GetMapping("/findByHobby")
 	public ResponseEntity<?> findByHobby(@RequestParam String hobby) {
 		Optional<HobbyCompetenceLangage> h = hobbyCompetenceLangageRepository.findById(hobby);
 		if (h.isPresent()) {
-			List<Utilisateur> utilisateurs =  h.get().getUtilisateurs();
+			List<Utilisateur> utilisateurs = h.get().getUtilisateurs();
 			if (utilisateurs.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {
@@ -94,13 +94,12 @@ public class UtilisateurController {
 		}
 	}
 
-	
 	@PostMapping("/connect")
-	public ResponseEntity<String> connection(@RequestBody Utilisateur utilisateur) {
+	public ResponseEntity<?> connection(@RequestBody Utilisateur utilisateur) {
 		Optional<Utilisateur> user = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
 		if (user.isPresent()) {
 			if (utilisateur.getMotDePasse().equals(user.get().getMotDePasse())) {
-				return ResponseEntity.ok("connected");
+				return ResponseEntity.ok(user.get());
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès refusé");
 			}

@@ -41,7 +41,7 @@ public class PhotoController {
 	UtilisateurRepository utilisateurRepository;
 
 	@PostMapping("/upload")
-	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam Photo photo) {
+	public ResponseEntity<String> saveImage(@RequestParam MultipartFile file, @RequestParam Photo photo) {
 		try {
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
@@ -54,7 +54,17 @@ public class PhotoController {
 		}
 
 	}
-
+	
+	@GetMapping("/findById")
+	public ResponseEntity<?> findById(@RequestParam int id){
+		Optional<Photo> photo = photoRepository.findById(id);
+		if(photo.isPresent()) {
+			return ResponseEntity.ok(photo.get());
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+	
 	@GetMapping("/findByUser")
 	public ResponseEntity<?> findByUser(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);

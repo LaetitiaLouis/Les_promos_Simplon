@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
+import co.simplon.model.Photo;
 import co.simplon.model.Utilisateur;
+import co.simplon.repository.PhotoRepository;
 import co.simplon.repository.UtilisateurRepository;
 
 @RestController
@@ -26,6 +28,9 @@ public class UtilisateurController {
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
+	
+	@Autowired
+	PhotoRepository photoRepository;
 
 	@DeleteMapping("/delete")
 	public void deleteUser(@RequestParam int id) {
@@ -56,7 +61,18 @@ public class UtilisateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	@GetMapping("/findByPhoto")
+	public ResponseEntity<?> findByPhoto(@RequestParam int id){
+		Optional<Photo> photo = photoRepository.findById(id);
+		if(photo.isPresent()) {
+			Utilisateur utilisateur = photo.get().getUtilisateur();
+			return ResponseEntity.ok(utilisateur);
+		} else {
+			return HttpResponse.NOT_FOUND;
+		} 
+	}
+	
 	@PostMapping("/connect")
 	public ResponseEntity<String> connection(@RequestBody Utilisateur utilisateur) {
 		Optional<Utilisateur> user = utilisateurRepository.findByPseudo(utilisateur.getPseudo());

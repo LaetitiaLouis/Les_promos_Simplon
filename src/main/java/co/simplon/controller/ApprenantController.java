@@ -51,9 +51,19 @@ public class ApprenantController {
 			return ResponseEntity.ok(apprenants);
 		}
 	}
-
+	
+	@GetMapping("/findById")
+	public ResponseEntity<?> findById(@RequestParam int id){
+		Optional<Apprenant> apprenant = apprenantRepository.findById(id);
+		if(apprenant.isPresent()) {
+			return ResponseEntity.ok(apprenant.get());
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+	
 	@GetMapping("/findByPseudo")
-	public ResponseEntity<?> find(@RequestParam String pseudo) {
+	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
 		Optional<Apprenant> apprenant = apprenantRepository.findByPseudo(pseudo);
 		if (apprenant.isPresent()) {
 			return ResponseEntity.ok(apprenant.get());

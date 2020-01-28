@@ -20,7 +20,7 @@ import co.simplon.model.Utilisateur;
 import co.simplon.repository.UtilisateurRepository;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/utilisateurs")
 @CrossOrigin("http://localhost:4200")
 public class UtilisateurController {
 
@@ -32,40 +32,44 @@ public class UtilisateurController {
 		utilisateurRepository.deleteById(id);
 	}
 
+	@GetMapping("/findById")
+	public ResponseEntity<?> findById(@RequestParam int id){
+		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
+		if(utilisateur.isPresent()) {
+			return ResponseEntity.ok(utilisateur.get());
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+
 	@GetMapping("/all")
 	public @ResponseBody Iterable<Utilisateur> getAllUsers() {
 		return utilisateurRepository.findAll();
 	}
 
 	@GetMapping("/findByPseudo")
-	public ResponseEntity<?> findByPseudo(String pseudo){
+	public ResponseEntity<?> findByPseudo(String pseudo) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findByPseudo(pseudo);
-		if(utilisateur.isPresent()) {
+		if (utilisateur.isPresent()) {
 			return ResponseEntity.ok(utilisateur);
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
+
 	@PostMapping("/connect")
-	public ResponseEntity<String> connection(@RequestBody Utilisateur utilisateur){
+	public ResponseEntity<String> connection(@RequestBody Utilisateur utilisateur) {
 		Optional<Utilisateur> user = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
-		if(user.isPresent()) {
-			if(utilisateur.getMotDePasse().equals(user.get().getMotDePasse())){
+		if (user.isPresent()) {
+			if (utilisateur.getMotDePasse().equals(user.get().getMotDePasse())) {
 				return ResponseEntity.ok("connected");
-			}
-			else {
+			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès refusé");
 			}
-		}
-		else {
+		} else {
 			return HttpResponse.NOT_FOUND;
-					
+
 		}
 	}
-
-
-
-
-	
 
 }

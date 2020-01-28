@@ -37,6 +37,16 @@ public class FormateurController {
 		return formateurRepository.save(formateur);
 	}
 
+	@GetMapping("/findById")
+	public ResponseEntity<?> findById(@RequestParam int id){
+		Optional<Formateur> formateur = formateurRepository.findById(id);
+		if(formateur.isPresent()) {
+			return ResponseEntity.ok(formateur);
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll() {
 		List<Formateur> formateurs = (List<Formateur>) formateurRepository.findAll();

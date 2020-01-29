@@ -1,5 +1,6 @@
 package co.simplon.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,5 +109,41 @@ public class UtilisateurController {
 
 		}
 	}
+	
+	
+	@GetMapping("/findByNom")
+	public ResponseEntity<?> findByNom(@RequestParam String nom){
+		List<Utilisateur> utilisateurs = utilisateurRepository.findByNom(nom);
+		if(utilisateurs.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(utilisateurs);
+		}
+	}
+
+	@GetMapping("/findByPrenom")
+	public ResponseEntity<?> findByPrenom(@RequestParam String prenom){
+		List<Utilisateur> utilisateurs = utilisateurRepository.findByPrenom(prenom);
+		if(utilisateurs.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(utilisateurs);
+		}	
+	}
+	
+	
+	@GetMapping("/findByNomPrenom")
+	public ResponseEntity<?> findByNomPrenom (@RequestParam String nomPrenom) {
+
+		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+		utilisateurs.addAll(utilisateurRepository.findByPrenom("%"+nomPrenom+"%"));
+		utilisateurs.addAll(utilisateurRepository.findByNom("%"+nomPrenom+"%"));
+		
+		if(utilisateurs.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(utilisateurs);
+		}	
+	}	
 
 }

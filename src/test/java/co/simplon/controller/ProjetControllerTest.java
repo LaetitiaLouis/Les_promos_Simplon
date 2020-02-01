@@ -43,7 +43,7 @@ public class ProjetControllerTest {
 		when(this.projetRepository.findById("soutenance")).thenReturn(Optional.of(projet));
 
 		// 1er test qui devrait trouver un obet
-		this.mockMvc.perform(get(BASE_URL + "findById?nom=soutenance")).andExpect(status().isOk())
+		this.mockMvc.perform(get(BASE_URL + "/findById?nom=soutenance")).andExpect(status().isOk())
 				.andExpect(jsonPath("nom").value(projet.getNom()));
 
 		// 2nd test qui devrait ne pas trouver d'objet

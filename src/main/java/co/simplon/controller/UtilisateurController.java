@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
@@ -55,8 +54,13 @@ public class UtilisateurController {
 	}
 
 	@GetMapping("/all")
-	public @ResponseBody Iterable<Utilisateur> getAllUsers() {
-		return utilisateurRepository.findAll();
+	public ResponseEntity<?> getAllUsers() {
+		List<Utilisateur> users = (List<Utilisateur>) utilisateurRepository.findAll();
+		if (users.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(users);
+		}
 	}
 
 	@GetMapping("/findByPseudo")
@@ -109,12 +113,11 @@ public class UtilisateurController {
 
 		}
 	}
-	
-	
+
 	@GetMapping("/findByNom")
-	public ResponseEntity<?> findByNom(@RequestParam String nom){
+	public ResponseEntity<?> findByNom(@RequestParam String nom) {
 		List<Utilisateur> utilisateurs = utilisateurRepository.findByNom(nom);
-		if(utilisateurs.isEmpty()) {
+		if (utilisateurs.isEmpty()) {
 			return HttpResponse.NOT_FOUND;
 		} else {
 			return ResponseEntity.ok(utilisateurs);
@@ -122,28 +125,27 @@ public class UtilisateurController {
 	}
 
 	@GetMapping("/findByPrenom")
-	public ResponseEntity<?> findByPrenom(@RequestParam String prenom){
+	public ResponseEntity<?> findByPrenom(@RequestParam String prenom) {
 		List<Utilisateur> utilisateurs = utilisateurRepository.findByPrenom(prenom);
-		if(utilisateurs.isEmpty()) {
+		if (utilisateurs.isEmpty()) {
 			return HttpResponse.NOT_FOUND;
 		} else {
 			return ResponseEntity.ok(utilisateurs);
-		}	
+		}
 	}
-	
-	
+
 	@GetMapping("/findByNomPrenom")
-	public ResponseEntity<?> findByNomPrenom (@RequestParam String nomPrenom) {
+	public ResponseEntity<?> findByNomPrenom(@RequestParam String nomPrenom) {
 
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
-		utilisateurs.addAll(utilisateurRepository.findByPrenom("%"+nomPrenom+"%"));
-		utilisateurs.addAll(utilisateurRepository.findByNom("%"+nomPrenom+"%"));
-		
-		if(utilisateurs.isEmpty()) {
+		utilisateurs.addAll(utilisateurRepository.findByPrenom("%" + nomPrenom + "%"));
+		utilisateurs.addAll(utilisateurRepository.findByNom("%" + nomPrenom + "%"));
+
+		if (utilisateurs.isEmpty()) {
 			return HttpResponse.NOT_FOUND;
 		} else {
 			return ResponseEntity.ok(utilisateurs);
-		}	
-	}	
+		}
+	}
 
 }

@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,13 +48,6 @@ public class UtilisateurControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	JacksonTester<Utilisateur> userJacksonTester;
-
-//	@BeforeEach
-//	public void setUp() {
-//		JacksonTester.initFields(this, objectMapper);
-//	}
-
 	private final Utilisateur user = new Utilisateur();
 	private final List<Utilisateur> users = new ArrayList<>();
 	private final String BASE_URL = "/api/utilisateurs";
@@ -66,7 +58,6 @@ public class UtilisateurControllerTest {
 		user.setPseudo("Pseudo");
 		user.setMotDePasse("Password");
 		users.add(user);
-		JacksonTester.initFields(user, objectMapper);
 	}
 
 	@Test

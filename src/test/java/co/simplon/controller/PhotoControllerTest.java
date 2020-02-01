@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,27 +24,32 @@ import co.simplon.repository.PhotoRepository;
 public class PhotoControllerTest {
 	
 	@Autowired
-	MockMvc mockMvc;
+	private MockMvc mockMvc;
 	
 	@MockBean
-	PhotoRepository photoRepository;
-
+	private PhotoRepository photoRepository;
 	
+	private Photo photo = new Photo();
+	private final String BASE_URL = "/api/photos";
+
+	@BeforeEach
+	public void setUp() {
+		Photo photo = new Photo();
+		photo.setCategorie("evenement");
+	}
 	
 
 	@Test
 	public void testFindOne() throws Exception {
-		Photo photo=new Photo();
-		photo.setCategorie("evenement");
 
 		when(this.photoRepository.findByCategorie("evenement")).thenReturn(List.of(photo));
 
-		this.mockMvc.perform(get("api/photos/findByCategorie?categorie=evenement"))
+		this.mockMvc.perform(get(BASE_URL + "/findByCategorie?categorie=evenement"))
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("categorie").value(photo.getCategorie()));
+		.andExpect(jsonPath("$.[0].categorie").value(photo.getCategorie()));
 		
 		
-		this.mockMvc.perform(get("api/photos/find?categorie=profil"))
+		this.mockMvc.perform(get(BASE_URL + "/findByCategorie?categorie=profil"))
 		.andExpect(status().isNotFound());
 	}
 }

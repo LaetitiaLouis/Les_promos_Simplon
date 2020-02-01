@@ -1,10 +1,10 @@
 package co.simplon.repository;
 
-import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -20,13 +20,13 @@ public class PhotoRepositoryTest {
 	
 	@Autowired
 	private TestEntityManager testEntityManager;
+	
 
 	@Test
 	public void testFindByCategorie() {
 		Photo photo=new Photo();
 		Photo photo2=new Photo();
 		Photo photo3=new Photo();
-		int i=0;
 		
 		photo.setCategorie("Evenement");
 		photo2.setCategorie("Evenement");
@@ -38,9 +38,8 @@ public class PhotoRepositoryTest {
 		
 		List<Photo> photoResult = this.photoRepository.findByCategorie("Evenement");
 		assertThat(photoResult.size()).isEqualTo(2);
-		for(Photo currentPhoto:photoResult) {
-			assertThat(photoResult.get(i).getCategorie()).isEqualTo(currentPhoto.getCategorie());
-			i++;
+		for(Photo currentPhoto: photoResult) {
+			assertThat("Evenement").isEqualTo(currentPhoto.getCategorie());
 		}
 		
 	}
@@ -50,8 +49,9 @@ public class PhotoRepositoryTest {
 		Photo photo=new Photo();
 		Photo photo2=new Photo();
 		Photo photo3=new Photo();
-		int i=0;
+
 		Utilisateur user1=new Utilisateur();
+		user1.setPseudo("Pseudo");
 		Utilisateur user2=new Utilisateur();
 		
 		photo.setUtilisateur(user1);
@@ -66,9 +66,9 @@ public class PhotoRepositoryTest {
 		
 		List<Photo> photoResult = this.photoRepository.findByUtilisateur(user1);
 		assertThat(photoResult.size()).isEqualTo(2);
-		for(Photo currentPhoto:photoResult) {
-			assertThat(currentPhoto.getUtilisateur().getId()).isEqualTo(user1.getId());
-			i++;
+		
+		for(Photo currentPhoto: photoResult) {
+			assertThat("Pseudo").isEqualTo(currentPhoto.getUtilisateur().getPseudo());
 		}
 		
 	}

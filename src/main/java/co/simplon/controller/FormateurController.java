@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,20 +34,26 @@ public class FormateurController {
 	PromoRepository promoRepository;
 
 	@PostMapping("/new")
-	public @ResponseBody Formateur create(@RequestBody Formateur formateur) {
-		return formateurRepository.save(formateur);
+	public ResponseEntity<?> create(@RequestBody Formateur formateur) {
+		Optional<Formateur> maybeFormateur = formateurRepository.findByPseudo(formateur.getPseudo());
+		if (maybeFormateur.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce pseudo existe déjà");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(formateurRepository.save(formateur));
+		}
+
 	}
 
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam int id){
+	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Formateur> formateur = formateurRepository.findById(id);
-		if(formateur.isPresent()) {
+		if (formateur.isPresent()) {
 			return ResponseEntity.ok(formateur);
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll() {
 		List<Formateur> formateurs = (List<Formateur>) formateurRepository.findAll();
@@ -83,7 +90,12 @@ public class FormateurController {
 	}
 
 	@PutMapping("/update")
-	public @ResponseBody Formateur update(@RequestBody Formateur formateur) {
-		return formateurRepository.save(formateur);
+	public @ResponseBody ResponseEntity<?> update(@RequestBody Formateur formateur) {
+		Optional<Formateur> maybeFormateur = formateurRepository.findById(formateur.getId());
+		if (maybeFormateur.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(formateurRepository.save(formateur));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ce formateur n'existe pas");
+		}
 	}
 }

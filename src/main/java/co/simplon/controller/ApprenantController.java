@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
@@ -38,8 +38,13 @@ public class ApprenantController {
 	PromoRepository promoRepository;
 
 	@PostMapping("/new")
-	public @ResponseBody Apprenant create(@RequestBody Apprenant apprenant) {
-		return apprenantRepository.save(apprenant);
+	public ResponseEntity<?> create(@RequestBody Apprenant apprenant) {
+		Optional<Apprenant> maybeApprenant = apprenantRepository.findByPseudo(apprenant.getPseudo());
+		if (maybeApprenant.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce pseudo est déjà utilisé");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(apprenantRepository.save(apprenant));
+		}
 	}
 
 	@GetMapping("/all")
@@ -76,7 +81,8 @@ public class ApprenantController {
 	public ResponseEntity<?> findbyPromo(@RequestParam String promo) {
 		Optional<Promo> p = promoRepository.findById(promo);
 		if (p.isPresent()) {
-			List<Apprenant> apprenants = apprenantRepository.findByPromo(p.get());
+			List<Apprenant> apprenants = p.get().getApprenants();
+			
 			if (apprenants.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {
@@ -103,8 +109,13 @@ public class ApprenantController {
 	}
 
 	@PutMapping("/update")
-	public @ResponseBody Apprenant update(@RequestBody Apprenant apprenant) {
-		return apprenantRepository.save(apprenant);
+	public ResponseEntity<?> update(@RequestBody Apprenant apprenant) {
+		Optional<Apprenant> maybeApprenant = apprenantRepository.findById(apprenant.getId());
+		if(maybeApprenant.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CREATED).body((apprenantRepository.save(apprenant)));
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
 	}
 
 }

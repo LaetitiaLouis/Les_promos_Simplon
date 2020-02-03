@@ -24,6 +24,7 @@ import co.simplon.repository.UtilisateurRepository;;
 @AutoConfigureMockMvc
 public class HobbyCompetenceLangageControllerTest {
 
+	
 	@Autowired
 	MockMvc mockMvc;
 

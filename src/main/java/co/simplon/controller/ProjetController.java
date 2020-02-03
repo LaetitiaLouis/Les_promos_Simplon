@@ -27,6 +27,7 @@ import co.simplon.repository.ProjetRepository;
 @CrossOrigin("http://localhost:4200")
 public class ProjetController {
 
+	
 	@Autowired
 	ProjetRepository projetRepository;
 

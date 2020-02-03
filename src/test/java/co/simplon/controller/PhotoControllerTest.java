@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import co.simplon.model.Photo;
 import co.simplon.repository.PhotoRepository;
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PhotoControllerTest {

@@ -31,6 +31,7 @@ import co.simplon.service.PhotoService;
 @CrossOrigin("http://localhost:4200")
 public class PhotoController {
 
+	
 	@Autowired
 	PhotoService photoService;
 

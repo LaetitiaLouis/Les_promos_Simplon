@@ -62,6 +62,7 @@ public class UtilisateurController {
 			return ResponseEntity.ok(users);
 		}
 	}
+	
 
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {

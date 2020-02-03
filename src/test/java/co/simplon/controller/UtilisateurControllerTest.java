@@ -49,7 +49,6 @@ public class UtilisateurControllerTest {
 	private ObjectMapper objectMapper;
 
 	private final Utilisateur user = new Utilisateur();
-	private final List<Utilisateur> users = new ArrayList<>();
 	private final String BASE_URL = "/api/utilisateurs";
 	private final MediaType JSON = MediaType.APPLICATION_JSON;
 
@@ -57,13 +56,11 @@ public class UtilisateurControllerTest {
 	public void setUp() {
 		user.setPseudo("Pseudo");
 		user.setMotDePasse("Password");
-		users.add(user);
 	}
 
 	@Test
 	public void testDelete() throws Exception {
-		this.mockMvc.perform(delete(BASE_URL + "/delete?id=1").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk());
+		this.mockMvc.perform(delete(BASE_URL + "/delete?id=1")).andExpect(status().isOk());
 
 	}
 
@@ -72,22 +69,21 @@ public class UtilisateurControllerTest {
 
 		when(this.utilisateurRepository.findById(1)).thenReturn(Optional.of(user));
 
-		this.mockMvc.perform(get(BASE_URL + "/findById?id=1").contentType(JSON).accept(JSON)).andExpect(status().isOk())
+		this.mockMvc.perform(get(BASE_URL + "/findById?id=1")).andExpect(status().isOk())
 				.andExpect(jsonPath("pseudo").value("Pseudo"));
 
-		this.mockMvc.perform(get(BASE_URL + "/findById?id=2").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findById?id=2")).andExpect(status().isNotFound());
 	}
 
 	@Test
 	public void testGetAllUsers() throws Exception {
-		List<Utilisateur> userList = new ArrayList<>();
-		userList.add(user);
-		when(this.utilisateurRepository.findAll()).thenReturn(userList);
+
+		when(this.utilisateurRepository.findAll()).thenReturn(List.of(user));
 
 		this.mockMvc.perform(get(BASE_URL + "/all")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
-		userList.clear();
+
+		when(this.utilisateurRepository.findAll()).thenReturn(new ArrayList<>());
 		this.mockMvc.perform(get(BASE_URL + "/all")).andExpect(status().isNotFound());
 	}
 
@@ -95,11 +91,10 @@ public class UtilisateurControllerTest {
 	public void testFindByPseudo() throws Exception {
 		when(this.utilisateurRepository.findByPseudo("Pseudo")).thenReturn(Optional.of(user));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByPseudo?pseudo=Pseudo").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("pseudo").value(user.getPseudo()));
+		this.mockMvc.perform(get(BASE_URL + "/findByPseudo?pseudo=Pseudo")).andExpect(status().isOk())
+				.andExpect(jsonPath("pseudo").value(user.getPseudo()));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByPseudo?pseudo=BadPseudo").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByPseudo?pseudo=BadPseudo")).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -108,24 +103,26 @@ public class UtilisateurControllerTest {
 		photo.setUtilisateur(user);
 		when(this.photoRepository.findById(1)).thenReturn(Optional.of(photo));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByPhoto?id=1").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("pseudo").value("Pseudo"));
+		this.mockMvc.perform(get(BASE_URL + "/findByPhoto?id=1")).andExpect(status().isOk())
+				.andExpect(jsonPath("pseudo").value("Pseudo"));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByPhoto?id=32").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByPhoto?id=32")).andExpect(status().isNotFound());
 	}
 
 	@Test
 	public void testFindByHobby() throws Exception {
 		HobbyCompetenceLangage hobby = new HobbyCompetenceLangage();
-		hobby.setUtilisateurs(users);
+		hobby.setUtilisateurs(List.of(user));
+
 		when(this.hobbyRepository.findById("sport")).thenReturn(Optional.of(hobby));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=couture").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=couture")).andExpect(status().isNotFound());
+
+		hobby.setUtilisateurs(new ArrayList<>());
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport")).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -136,39 +133,51 @@ public class UtilisateurControllerTest {
 				.perform(post(BASE_URL + "/connect").contentType(JSON).content(objectMapper.writeValueAsString(user)))
 				.andExpect(status().isOk()).andExpect(jsonPath("pseudo").value("Pseudo"));
 
+		Utilisateur badPasswordUser = new Utilisateur();
+		badPasswordUser.setPseudo("Pseudo");
+		badPasswordUser.setMotDePasse("BadPassword");
+		this.mockMvc
+				.perform(post(BASE_URL + "/connect").contentType(JSON)
+						.content(objectMapper.writeValueAsString(badPasswordUser)))
+				.andExpect(status().isUnauthorized());
+		user.setPseudo("inconnu");
+		this.mockMvc
+				.perform(post(BASE_URL + "/connect").contentType(JSON).content(objectMapper.writeValueAsString(user)))
+				.andExpect(status().isNotFound());
+
 	}
 
 	@Test
 	public void testFindByNom() throws Exception {
-		when(utilisateurRepository.findByNom("GoodName")).thenReturn(users);
+		when(utilisateurRepository.findByNom("GoodName")).thenReturn(List.of(user));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByNom?nom=GoodName").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
-		this.mockMvc.perform(get(BASE_URL + "/findByNom?nom=BadName").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByNom?nom=GoodName")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
+
+		this.mockMvc.perform(get(BASE_URL + "/findByNom?nom=BadName")).andExpect(status().isNotFound());
 
 	}
 
 	@Test
 	public void testFindByPrenom() throws Exception {
-		when(utilisateurRepository.findByPrenom("GoodName")).thenReturn(users);
+		when(utilisateurRepository.findByPrenom("GoodName")).thenReturn(List.of(user));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByPrenom?prenom=GoodName").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
-		this.mockMvc.perform(get(BASE_URL + "/findByPrenom?prenom=BadName").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByPrenom?prenom=GoodName")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
+
+		this.mockMvc.perform(get(BASE_URL + "/findByPrenom?prenom=BadName")).andExpect(status().isNotFound());
 
 	}
 
 	@Test
 	public void testFindByNomPrenom() throws Exception {
-		when(utilisateurRepository.findByNom("%GoodName%")).thenReturn(users);
-		when(utilisateurRepository.findByPrenom("%GoodName%")).thenReturn(users);
+		when(utilisateurRepository.findByNom("%GoodName%")).thenReturn(List.of(user));
+		when(utilisateurRepository.findByPrenom("%GoodName%")).thenReturn(List.of(user));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByNomPrenom?nomPrenom=GoodName").contentType(JSON).accept(JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
-		this.mockMvc.perform(get(BASE_URL + "/findByNomPrenom?nomPrenom=BadName").contentType(JSON).accept(JSON))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByNomPrenom?nomPrenom=GoodName")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
+
+		this.mockMvc.perform(get(BASE_URL + "/findByNomPrenom?nomPrenom=BadName")).andExpect(status().isNotFound());
 
 	}
 

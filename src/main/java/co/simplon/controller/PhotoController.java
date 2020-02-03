@@ -54,17 +54,17 @@ public class PhotoController {
 		}
 
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam int id){
+	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Photo> photo = photoRepository.findById(id);
-		if(photo.isPresent()) {
+		if (photo.isPresent()) {
 			return ResponseEntity.ok(photo.get());
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
+
 	@GetMapping("/findByUser")
 	public ResponseEntity<?> findByUser(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
@@ -99,12 +99,25 @@ public class PhotoController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune photo correspondante");
 		}
-
 	}
 
 	@PutMapping("/update")
-	public @ResponseBody Photo update(@RequestBody Photo photo) {
-		return photoRepository.save(photo);
+	public @ResponseBody ResponseEntity<?> update(@RequestBody Photo photo) {
+		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
+		if (maybePhoto.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cette photo n'existe pas");
+		}
 	}
 
+	@PostMapping("/new")
+	public @ResponseBody ResponseEntity<?> create(@RequestBody Photo photo) {
+		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
+		if (maybePhoto.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette photo existe déjà");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
+		}
+	}
 }

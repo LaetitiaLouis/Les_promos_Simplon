@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,13 +44,24 @@ public class ProjetController {
 	}
 
 	@PutMapping("/update")
-	public @ResponseBody Projet update(@RequestBody Projet projet) {
-		return projetRepository.save(projet);
+	public @ResponseBody ResponseEntity<?> update(@RequestBody Projet projet) {
+		Optional<Projet> maybeProjet = projetRepository.findById(projet.getNom());
+		if (maybeProjet.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(projetRepository.save(projet));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ce projet n'existe pas");
+		}
 	}
 
 	@PostMapping("/new")
-	public @ResponseBody Projet create(@RequestBody Projet projet) {
-		return projetRepository.save(projet);
+	public @ResponseBody ResponseEntity<?> create(@RequestBody Projet projet) {
+		Optional<Projet> maybeProjet = projetRepository.findById(projet.getNom());
+		if (maybeProjet.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce projet existe déjà");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(projetRepository.save(projet));
+		}
+
 	}
 
 	@GetMapping("/findById")

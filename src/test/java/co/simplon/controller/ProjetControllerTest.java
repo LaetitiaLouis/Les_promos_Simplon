@@ -1,8 +1,9 @@
 package co.simplon.controller;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
-import co.simplon.model.Utilisateur;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
@@ -31,13 +34,17 @@ public class ProjetControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@Autowired
+	private ObjectMapper objectMapper;
+
 	@MockBean
 	private ProjetRepository projetRepository;
 	@MockBean
 	private HobbyCompetenceLangageRepository hobbyRepository;
-	
+
 	private final Projet projet = new Projet();
 	private final String BASE_URL = "/api/projets";
+	private final MediaType JSON = MediaType.APPLICATION_JSON;
 
 	@BeforeEach
 	public void setUp() {
@@ -58,8 +65,34 @@ public class ProjetControllerTest {
 	}
 
 	@Test
-	public void testCreate() throws Exception {
-		this.mockMvc.perform(delete(BASE_URL + "/delete?id=1")).andExpect(status().isOk());
+	public void testNew() throws Exception {
+		when(projetRepository.save(projet)).thenReturn(projet);
+		when(projetRepository.findById("soutenance")).thenReturn(Optional.of(projet));
+		projet.setNom("inexistant");
+
+		mockMvc.perform(
+				post(BASE_URL + "/new").accept(JSON).contentType(JSON).content(objectMapper.writeValueAsString(projet)))
+				.andExpect(status().isCreated());
+
+		projet.setNom("soutenance");
+		mockMvc.perform(
+				post(BASE_URL + "/new").accept(JSON).contentType(JSON).content(objectMapper.writeValueAsString(projet)))
+				.andExpect(status().isConflict());
+	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+		
+		when(projetRepository.save(projet)).thenReturn(projet);
+		when(projetRepository.findById("soutenance")).thenReturn(Optional.of(projet));
+
+		mockMvc.perform(put(BASE_URL + "/update").contentType(JSON).content(objectMapper.writeValueAsString(projet)))
+				.andExpect(status().isCreated());
+		// .andResult(jsonPath("soutenance").value("UpdatedNom"));
+
+		projet.setNom("updateSoutenance");
+		mockMvc.perform(put(BASE_URL + "/update").contentType(JSON).content(objectMapper.writeValueAsString(projet)))
+				.andExpect(status().isNotFound());
 	}
 
 	@Test

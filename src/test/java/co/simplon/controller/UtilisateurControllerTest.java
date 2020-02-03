@@ -116,11 +116,13 @@ public class UtilisateurControllerTest {
 
 		when(this.hobbyRepository.findById("sport")).thenReturn(Optional.of(hobby));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport"))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.[0].pseudo").value("Pseudo"));
 
-		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=couture"))
-				.andExpect(status().isNotFound());
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=couture")).andExpect(status().isNotFound());
+
+		hobby.setUtilisateurs(new ArrayList<>());
+		this.mockMvc.perform(get(BASE_URL + "/findByHobby?hobby=sport")).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -130,6 +132,18 @@ public class UtilisateurControllerTest {
 		this.mockMvc
 				.perform(post(BASE_URL + "/connect").contentType(JSON).content(objectMapper.writeValueAsString(user)))
 				.andExpect(status().isOk()).andExpect(jsonPath("pseudo").value("Pseudo"));
+
+		Utilisateur badPasswordUser = new Utilisateur();
+		badPasswordUser.setPseudo("Pseudo");
+		badPasswordUser.setMotDePasse("BadPassword");
+		this.mockMvc
+				.perform(post(BASE_URL + "/connect").contentType(JSON)
+						.content(objectMapper.writeValueAsString(badPasswordUser)))
+				.andExpect(status().isUnauthorized());
+		user.setPseudo("inconnu");
+		this.mockMvc
+				.perform(post(BASE_URL + "/connect").contentType(JSON).content(objectMapper.writeValueAsString(user)))
+				.andExpect(status().isNotFound());
 
 	}
 

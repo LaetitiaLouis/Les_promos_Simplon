@@ -106,7 +106,7 @@ public class UtilisateurController {
 			if (utilisateur.getMotDePasse().equals(user.get().getMotDePasse())) {
 				return ResponseEntity.ok(user.get());
 			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès refusé");
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Accès refusé");
 			}
 		} else {
 			return HttpResponse.NOT_FOUND;

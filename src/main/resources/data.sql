@@ -5,16 +5,19 @@ INSERT INTO role (libelle, admin) VALUES
 ('utilisateur', false);
 
 
--- Utilisateur
+-- Utilisateurs
 INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, email, mot_de_passe, pseudo, role_id)  VALUES 
 ( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1),
 ( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2),
 ( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1);
 
---Promo
+-- Promos
 insert into promo (nom, annee_fin, specialite) values 
-('LP4', '2020', 'Dev Web'),
-('LP3', '2019', 'Dev Web');
+('LP1', '2017', 'webdev'),
+('LP2', '2018', 'webdev'),
+('LP3', '2019', 'webdev'),
+('LP4', '2020', 'webdev'),
+('LP1S', '2020', 'cybersecu');
 
 --Apprenants
 INSERT INTO apprenant (entite_affectation, utilisateur_id, promo_nom) VALUES 

@@ -51,7 +51,7 @@ public class Utilisateur {
 	@OneToMany (cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Photo> photos = new ArrayList<>();
-	
+
 	@ManyToMany
 	@JsonIgnore
 	@JoinTable(name = "utilisateur_hobby", inverseJoinColumns = @JoinColumn(name = "hobby"))

@@ -15,16 +15,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Promo {
-	
+
 	@Id
 	private String nom;
 	private String anneeFin;
 	private String specialite;
-	
-	@OneToMany(mappedBy="promo")
+
+	@OneToMany(mappedBy = "promo")
 	private List<Apprenant> apprenants = new ArrayList<>();
-	
+
 	@ManyToMany(mappedBy = "promos")
-	private List<Formateur> formateurs = new ArrayList<>() ;
-	
+	private List<Formateur> formateurs = new ArrayList<>();
+
 }

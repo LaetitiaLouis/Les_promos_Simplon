@@ -27,7 +27,6 @@ import co.simplon.model.Projet;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProjetControllerTest {
@@ -54,8 +53,6 @@ public class ProjetControllerTest {
 
 	@Test
 	public void testGetAllProjets() throws Exception {
-//		List<Projet> projets = new ArrayList<>();
-//		projets.add(projet);
 		when(this.projetRepository.findAll()).thenReturn(List.of(projet));
 
 		this.mockMvc.perform(get(BASE_URL + "/all")).andExpect(status().isOk())
@@ -80,10 +77,10 @@ public class ProjetControllerTest {
 				post(BASE_URL + "/new").accept(JSON).contentType(JSON).content(objectMapper.writeValueAsString(projet)))
 				.andExpect(status().isConflict());
 	}
-	
+
 	@Test
 	public void testUpdate() throws Exception {
-		
+
 		when(projetRepository.save(projet)).thenReturn(projet);
 		when(projetRepository.findById("soutenance")).thenReturn(Optional.of(projet));
 

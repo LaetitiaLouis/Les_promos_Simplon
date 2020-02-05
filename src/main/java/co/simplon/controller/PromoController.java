@@ -1,5 +1,6 @@
 package co.simplon.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,24 @@ import co.simplon.repository.PromoRepository;
 @RequestMapping("/api/promos")
 @CrossOrigin("http://localhost:4200")
 public class PromoController {
-	
+
 	@Autowired
 	PromoRepository promoRepository;
-	
+
 	@GetMapping("/all")
-	public Iterable<Promo> getAll() {
-		return this.promoRepository.findAll();
+	public ResponseEntity<?> getAll() {
+		List<Promo> promos = (List<Promo>) promoRepository.findAll();
+		if (promos.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(promos);
+		}
 	}
-	
+
 	@GetMapping("/findById")
-	public ResponseEntity<?> findById(@RequestParam String nom){
+	public ResponseEntity<?> findById(@RequestParam String nom) {
 		Optional<Promo> promo = promoRepository.findById(nom);
-		if(promo.isPresent()) {
+		if (promo.isPresent()) {
 			return ResponseEntity.ok(promo.get());
 		} else {
 			return HttpResponse.NOT_FOUND;

@@ -148,5 +148,15 @@ public class UtilisateurController {
 			return ResponseEntity.ok(utilisateurs);
 		}
 	}
+	
+	@GetMapping("/pseudoExists")
+	public boolean checkIfPseudoExists(@RequestParam String pseudo) {
+		return utilisateurRepository.existsByPseudo(pseudo);
+	}
+	
+	@GetMapping("/emailExists")
+	public boolean checkIfEmailExists(@RequestParam String email) {
+		return utilisateurRepository.existsByEmail(email);
+	}
 
 }

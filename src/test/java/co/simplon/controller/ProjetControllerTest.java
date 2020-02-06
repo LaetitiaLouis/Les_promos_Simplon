@@ -86,7 +86,6 @@ public class ProjetControllerTest {
 
 		mockMvc.perform(put(BASE_URL + "/update").contentType(JSON).content(objectMapper.writeValueAsString(projet)))
 				.andExpect(status().isCreated());
-		// .andResult(jsonPath("soutenance").value("UpdatedNom"));
 
 		projet.setNom("updateSoutenance");
 		mockMvc.perform(put(BASE_URL + "/update").contentType(JSON).content(objectMapper.writeValueAsString(projet)))

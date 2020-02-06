@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -179,6 +180,24 @@ public class UtilisateurControllerTest {
 
 		this.mockMvc.perform(get(BASE_URL + "/findByNomPrenom?nomPrenom=BadName")).andExpect(status().isNotFound());
 
+	}
+	
+	@Test
+	public void testCheckIfPseudoExists() throws Exception {
+		when(utilisateurRepository.existsByPseudo("Pseudo")).thenReturn(true);
+		
+		this.mockMvc.perform(get(BASE_URL + "/pseudoExists?pseudo=Pseudo")).andExpect(content().string("true"));
+		
+		this.mockMvc.perform(get(BASE_URL + "/pseudoExists?pseudo=BadPseudo")).andExpect(content().string("false"));
+	}
+	
+	@Test
+	public void testCheckIfEmailExists() throws Exception {
+		when(utilisateurRepository.existsByEmail("Email")).thenReturn(true);
+		
+		this.mockMvc.perform(get(BASE_URL + "/emailExists?email=Email")).andExpect(content().string("true"));
+		
+		this.mockMvc.perform(get(BASE_URL + "/emailExists?email=BadEmail")).andExpect(content().string("false"));
 	}
 
 }

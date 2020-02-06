@@ -31,7 +31,6 @@ import co.simplon.service.PhotoService;
 @CrossOrigin("http://localhost:4200")
 public class PhotoController {
 
-	
 	@Autowired
 	PhotoService photoService;
 
@@ -119,6 +118,16 @@ public class PhotoController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette photo existe déjà");
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
+		}
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity<?> getAll() {
+		List<Photo> photos = (List<Photo>) photoRepository.findAll();
+		if (photos.isEmpty()) {
+			return HttpResponse.NOT_FOUND;
+		} else {
+			return ResponseEntity.ok(photos);
 		}
 	}
 }

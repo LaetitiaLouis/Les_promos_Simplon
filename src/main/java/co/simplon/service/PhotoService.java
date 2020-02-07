@@ -16,9 +16,7 @@ import co.simplon.model.Photo;
 
 @Service
 public class PhotoService {
-	
-
-    
+	    
 	private final String SEPAR = File.separator;
 	private final String UPLOAD_DIR = System.getProperty("user.home") + SEPAR + "uploads" + SEPAR;
 

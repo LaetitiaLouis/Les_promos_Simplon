@@ -3,6 +3,7 @@ package co.simplon.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -20,9 +21,9 @@ public class Projet {
 	private String typeProjet;
 	private String descriptif;
 	
-	@ManyToMany (mappedBy = "projets")
+	@ManyToMany (mappedBy = "projets", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<HobbyCompetenceLangage> langages = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "projets")
+	@ManyToMany(mappedBy = "projets", cascade = CascadeType.MERGE)
 	private List<Apprenant> apprenants = new ArrayList<>();
 }

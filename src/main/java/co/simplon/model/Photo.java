@@ -2,6 +2,7 @@ package co.simplon.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,6 @@ public class Photo {
 	private LocalDate datePhoto;
 	private String imageUrl;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Utilisateur utilisateur;
 }

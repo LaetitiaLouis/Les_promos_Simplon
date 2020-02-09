@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,11 +45,11 @@ public class Utilisateur {
 	private String motDePasse;
 	@Column(columnDefinition = "varchar(255) default 'http://localhost:8080/api/photos/download/avatar.png'")
 	private String avatarUrl;
-	
+
 	@ManyToOne
 	private Role role;
-	
-	@OneToMany (cascade = CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Photo> photos = new ArrayList<>();
 

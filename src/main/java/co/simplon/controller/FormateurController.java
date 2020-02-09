@@ -21,6 +21,7 @@ import co.simplon.model.Formateur;
 import co.simplon.model.Promo;
 import co.simplon.repository.FormateurRepository;
 import co.simplon.repository.PromoRepository;
+import co.simplon.repository.RoleRepository;
 
 @RestController
 @RequestMapping("/api/formateurs")
@@ -32,9 +33,13 @@ public class FormateurController {
 
 	@Autowired
 	PromoRepository promoRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 
 	@PostMapping("/new")
 	public ResponseEntity<?> create(@RequestBody Formateur formateur) {
+		formateur.setRole(roleRepository.findById(2).get());
 		Optional<Formateur> maybeFormateur = formateurRepository.findByPseudo(formateur.getPseudo());
 		if (maybeFormateur.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce pseudo existe déjà");

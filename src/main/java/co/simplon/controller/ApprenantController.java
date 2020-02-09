@@ -22,6 +22,7 @@ import co.simplon.model.Promo;
 import co.simplon.repository.ApprenantRepository;
 import co.simplon.repository.ProjetRepository;
 import co.simplon.repository.PromoRepository;
+import co.simplon.repository.RoleRepository;
 
 @RestController
 @RequestMapping("/api/apprenants")
@@ -37,8 +38,12 @@ public class ApprenantController {
 	@Autowired
 	PromoRepository promoRepository;
 
+	@Autowired
+	RoleRepository roleRepository;
+
 	@PostMapping("/new")
 	public ResponseEntity<?> create(@RequestBody Apprenant apprenant) {
+		apprenant.setRole(roleRepository.findById(2).get());
 		Optional<Apprenant> maybeApprenant = apprenantRepository.findByPseudo(apprenant.getPseudo());
 		if (maybeApprenant.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce pseudo est déjà utilisé");
@@ -82,7 +87,7 @@ public class ApprenantController {
 		Optional<Promo> p = promoRepository.findById(promo);
 		if (p.isPresent()) {
 			List<Apprenant> apprenants = p.get().getApprenants();
-			
+
 			if (apprenants.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {
@@ -111,7 +116,7 @@ public class ApprenantController {
 	@PutMapping("/update")
 	public ResponseEntity<?> update(@RequestBody Apprenant apprenant) {
 		Optional<Apprenant> maybeApprenant = apprenantRepository.findById(apprenant.getId());
-		if(maybeApprenant.isPresent()) {
+		if (maybeApprenant.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CREATED).body((apprenantRepository.save(apprenant)));
 		} else {
 			return HttpResponse.NOT_FOUND;

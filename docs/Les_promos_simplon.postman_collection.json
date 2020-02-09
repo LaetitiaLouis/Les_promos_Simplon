@@ -1,0 +1,412 @@
+{
+	"info": {
+		"_postman_id": "df1aeb68-e1ae-4c3a-aa86-8b09b18d9b10",
+		"name": "Les_promos_simplon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create",
+			"item": [
+				{
+					"name": "Projet création",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nom\": \"Angular-project\",\r\n\"typeProjet\": \"projet\",\r\n\"descriptif\": \"Projet Front-end\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/projets/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"projets",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hobbies create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nom\": \"Angular\",\r\n\"typeHobby\": \"Langage\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/hobbies/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hobbies",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "formateur create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nom\": \"tobelem\",\r\n\"prenom\": \"phil\",\r\n\"dateDeNaissance\": \"1984-12-01\",\r\n\"presentation\": \"formateur émérite\",\r\n\"commentaires\": \"Commentaire de Josselin\",\r\n\"pseudo\": \"philip\",\r\n\"email\": \"phil@simplon.co\",\r\n\"motDePasse\": \"password\",\r\n\"avatarUrl\": \"josselin.jpeg\",\r\n\"role\": {\r\n\"id\": 2,\r\n\"libelle\": \"utilisateur\",\r\n\"admin\": false\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/formateurs/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"formateurs",
+								"new"
+							]
+						},
+						"description": "Création d'un nouveau formateur"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "update",
+			"item": [
+				{
+					"name": "projet update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nom\": \"Angular-project\",\r\n\"typeProjet\": \"projet\",\r\n\"descriptif\": \"Projet princesse\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/projets/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"projets",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hobbies update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nom\": \"Angular2\",\r\n\"typeHobby\": \"Langage\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/hobbies/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hobbies",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apprenant update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"id\": 1,\r\n        \"nom\": \"maunier\",\r\n        \"prenom\": \"cédric\",\r\n        \"dateDeNaissance\": \"1983-05-05\",\r\n        \"presentation\": \"passioné de dev\",\r\n        \"commentaires\": \"trop cool Cédric!!!!\",\r\n        \"avatarUrl\": \"users.jpeg\",\r\n        \"email\": \"cedric.maunier.lp4@gmail.com\",\r\n        \"pseudo\": \"drikc\",\r\n        \"motDePasse\": \"changeme\",\r\n        \"role\": {\r\n            \"id\": 1,\r\n            \"libelle\": \"administrateur\",\r\n            \"admin\": true\r\n        },\r\n        \"entiteAffectation\": \"Gradignan\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/apprenants/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"apprenants",
+								"update"
+							]
+						},
+						"description": "Modification d'un apprenant"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8e29028f-0c05-42cf-bc90-bf23c8f35764",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "046ba057-0c14-4659-93bc-729fbd5e34cd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "delete",
+			"item": [
+				{
+					"name": "utilistateur delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/utilisateurs/delete?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"utilisateurs",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "suppression d'un utilisateur"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "FindBy",
+			"item": [
+				{
+					"name": "Hobbies FindByProjet",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/hobbies/findByProjet?projet=Fil-rouge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hobbies",
+								"findByProjet"
+							],
+							"query": [
+								{
+									"key": "projet",
+									"value": "Fil-rouge"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apprenants FindByProjet",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/apprenants/findByProjet?projet=Fil-rouge",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"apprenants",
+								"findByProjet"
+							],
+							"query": [
+								{
+									"key": "projet",
+									"value": "Fil-rouge"
+								}
+							]
+						},
+						"description": "Recherche 1 utilisateur via le nom d'un projet"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GetAll",
+			"item": [
+				{
+					"name": "Utilisateurs getALL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"all"
+							]
+						},
+						"description": "Recherche tous les utilisateurs après update"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

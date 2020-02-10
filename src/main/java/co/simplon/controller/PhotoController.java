@@ -55,6 +55,9 @@ public class PhotoController {
 				user.setAvatarUrl(photo.getImageUrl());
 			}
 			System.out.println(user.getAvatarUrl());
+			List<Photo> photos = user.getPhotos();
+			photos.add(photo);
+			user.setPhotos(photos);
 			utilisateurRepository.save(user);
 			photoRepository.save(photo);
 			return ResponseEntity.ok(photo);

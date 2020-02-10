@@ -6,16 +6,16 @@ INSERT INTO role (libelle, admin) VALUES
 
 
 -- Utilisateurs
-INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, email, mot_de_passe, pseudo, role_id)  VALUES 
-( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1),
-( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2),
-( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1),
-( 'Merchadou', 'Sébastien', '1984/02/20','cuisine','commentaire panda', 'merchadou.sebastien@gmail.com','mdpadmin','pandi', 1),
-( 'Philipe', 'phil','1984/12/01','formateur émérite','Commentaire de Philippe', 'philippe@simplon.co','password','phil', 2),
-( 'StarJS', 'StarNode', '1979/06/12','véritable bcodeur','Commentaire de StarJS', 'StarJs.lp4@gmail.com','motdepasse','starjs', 1),
-( 'balcon', 'sophie', '1985/01/17','passioné de moto','Simple commentaire', 'sophie.balconlp4@gmail.com','changeme','sbalcon', 1),
-( 'bensaid', 'Anissa','1989/12/01','Cheffe de projet','Commentaire d\'anissa', 'abensaid@simplon.co','password','abensaid', 2),
-( 'test', 'test', '1979/06/12','tttttttteeeeeeeessssssssssssssssssssttttttttttttttttttt test test tests tettetetetessssttt','Commentaireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee de commentaireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'commentaire.lp4@gmail.com','motdepasse','commentaire', 1);
+INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, email, mot_de_passe, pseudo, role_id, avatar_url)  VALUES 
+( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1, 'http://localhost:8080/api/photos/download/1_Cédric.jpg' ),
+( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2, 'http://localhost:8080/api/photos/download/avatar.png'),
+( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1, 'http://localhost:8080/api/photos/download/2_Laëtitia.jpg'),
+( 'Merchadou', 'Sébastien', '1984/02/20','cuisine','commentaire panda', 'merchadou.sebastien@gmail.com','mdpadmin','pandi', 1,'http://localhost:8080/api/photos/download/3_Sébastien.jpg' ),
+( 'Philipe', 'phil','1984/12/01','formateur émérite','Commentaire de Philippe', 'philippe@simplon.co','password','phil',2, 'http://localhost:8080/api/photos/download/avatar.png'),
+( 'StarJS', 'StarNode', '1979/06/12','véritable bcodeur','Commentaire de StarJS', 'StarJs.lp4@gmail.com','motdepasse','starjs', 1, 'http://localhost:8080/api/photos/download/4_François.jpg'),
+( 'balcon', 'sophie', '1985/01/17','passioné de moto','Simple commentaire', 'sophie.balconlp4@gmail.com','changeme','sbalcon', 1, 'http://localhost:8080/api/photos/download/5_Sophie.jpg'),
+( 'bensaid', 'Anissa','1989/12/01','Chef de projet','Commentaire d\'anissa', 'abensaid@simplon.co','password','abensaid', 2, 'http://localhost:8080/api/photos/download/13_Anissa.jpg'),
+( 'unknown', 'Maureen', '1979/06/12','tettetetetessssttt','Commentaireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'commentaire.lp4@gmail.com','motdepasse','commentaire', 1, 'http://localhost:8080/api/photos/download/12_Maureen.jpg');
 
 -- Promos
 insert into promo (nom, annee_fin, specialite) values 
@@ -40,15 +40,19 @@ INSERT INTO formateur (utilisateur_id) VALUES (2),(5),(8);
 
 --Photos
 INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values 
-('Photo Cédric','evenement', '2020/01/22', 'image.jpg',1),
-('Photo Laetitia','evenement', '2020/01/22', 'image.jpg',3),
-('Photo Seb','evenement', '2020/01/22', 'image.jpg',4),
-('Photo StarJs','evenement', '2020/01/22', 'image.jpg',6),
-('Photo Sophie','evenement', '2020/01/22', 'image.jpg',7),
-('Photo Commentaire','evenement', '2020/01/22', 'image.jpg',9),
-('Photo Phil','evenement', '2020/01/22', 'image.jpg',5),
-('Photo Josslein','evenement', '2020/01/22', 'image.jpg',2),
-('Galette des rois','Convivialité', '2020/01/04', 'image.jpg',3);
+('Cédric','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/1_Cédric.jpg',1),
+('Laetitia','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/2_Laëtitia.jpg',3),
+('Sébastien','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/3_Sébastien.jpg',4),
+('François','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/4_François.jpg',6),
+('Sophie','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/5_Sophie.jpg',7),
+('La P4','groupe', '2020/01/22', 'http://localhost:8080/api/photos/download/6_La_P4.jpg',9),
+('Le jour du ministre','évenement', '2020/01/22', 'http://localhost:8080/api/photos/download/7_Le_jour_du_ministre.jpg',5),
+('Tous au bar','groupe', '2020/01/22', 'http://localhost:8080/api/photos/download/8_Tous_au_bar.jpg',2),
+('Café & Stylo','travail', '2020/01/04', 'http://localhost:8080/api/photos/download/9_Café_&_Stylo.jpg',3),
+('Outil de travail', 'travail', '2020/01/02', 'http://localhost:8080/api/photos/download/10_Outil_de_travail.jpg', 2),
+('Le nez dedans', 'travail', '2020/01/05','http://localhost:8080/api/photos/download/11_Le_nez_dedans.jpg', 2),
+('Maureen', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/12_Maureen.jpg', 9),
+('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8);
 
 --Lien Utilisateur/photos
 insert into utilisateur_photos (utilisateur_id, photos_id) values 
@@ -60,7 +64,11 @@ insert into utilisateur_photos (utilisateur_id, photos_id) values
 (9,6),
 (5,7),
 (2,8),
-(3,9);
+(3,9),
+(2,10),
+(2,11),
+(9,12),
+(10,13);
 
 --Promo apprenant
 insert into apprenant_promo(promo_id, apprenant_id) values

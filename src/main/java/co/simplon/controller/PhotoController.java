@@ -41,12 +41,21 @@ public class PhotoController {
 	UtilisateurRepository utilisateurRepository;
 
 	@PostMapping("/upload")
-	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file) {
+	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
+			@RequestParam int userId, @RequestParam boolean isProfile) {
 		try {
-			Photo photo = photoRepository.save(new Photo());
-			photo.setNom(file.getOriginalFilename());
+			Utilisateur user = utilisateurRepository.findById(userId).get();
+			Photo photo = photoRepository.findById(photoId).get();
+
+			photo.setUtilisateur(user);
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
+
+			if (isProfile) {
+				user.setAvatarUrl(photo.getImageUrl());
+			}
+			System.out.println(user.getAvatarUrl());
+			utilisateurRepository.save(user);
 			photoRepository.save(photo);
 			return ResponseEntity.ok(photo);
 
@@ -115,12 +124,7 @@ public class PhotoController {
 
 	@PostMapping("/new")
 	public @ResponseBody ResponseEntity<?> create(@RequestBody Photo photo) {
-		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
-		if (maybePhoto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette photo existe déjà");
-		} else {
-			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
-		}
+		return ResponseEntity.ok(photoRepository.save(photo));
 	}
 
 	@GetMapping("/all")

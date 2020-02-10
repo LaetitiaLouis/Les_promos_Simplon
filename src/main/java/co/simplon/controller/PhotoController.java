@@ -41,12 +41,14 @@ public class PhotoController {
 	UtilisateurRepository utilisateurRepository;
 
 	@PostMapping("/upload")
-	public ResponseEntity<String> saveImage(@RequestParam MultipartFile file, @RequestParam Photo photo) {
+	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file) {
 		try {
+			Photo photo = photoRepository.save(new Photo());
+			photo.setNom(file.getOriginalFilename());
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
 			photoRepository.save(photo);
-			return ResponseEntity.ok("Photo enregistrée");
+			return ResponseEntity.ok(photo);
 
 		} catch (Exception e) {
 			e.printStackTrace();

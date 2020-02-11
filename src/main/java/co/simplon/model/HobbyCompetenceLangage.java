@@ -3,6 +3,7 @@ package co.simplon.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +26,7 @@ public class HobbyCompetenceLangage {
 	private String nom;
 	private String typeHobby;
 	
-	@ManyToMany (mappedBy = "hobbies")
+	@ManyToMany(mappedBy = "hobbies", cascade = CascadeType.MERGE)
 	private List<Utilisateur> utilisateurs = new ArrayList<>();
 	
 	@JsonIgnore

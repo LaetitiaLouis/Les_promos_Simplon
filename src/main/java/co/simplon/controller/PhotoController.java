@@ -41,12 +41,26 @@ public class PhotoController {
 	UtilisateurRepository utilisateurRepository;
 
 	@PostMapping("/upload")
-	public ResponseEntity<String> saveImage(@RequestParam MultipartFile file, @RequestParam Photo photo) {
+	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
+			@RequestParam int userId, @RequestParam boolean isProfile) {
 		try {
+			Utilisateur user = utilisateurRepository.findById(userId).get();
+			Photo photo = photoRepository.findById(photoId).get();
+
+			photo.setUtilisateur(user);
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
+
+			if (isProfile) {
+				user.setAvatarUrl(photo.getImageUrl());
+			}
+			System.out.println(user.getAvatarUrl());
+			List<Photo> photos = user.getPhotos();
+			photos.add(photo);
+			user.setPhotos(photos);
+			utilisateurRepository.save(user);
 			photoRepository.save(photo);
-			return ResponseEntity.ok("Photo enregistrée");
+			return ResponseEntity.ok(photo);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,12 +127,7 @@ public class PhotoController {
 
 	@PostMapping("/new")
 	public @ResponseBody ResponseEntity<?> create(@RequestBody Photo photo) {
-		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
-		if (maybePhoto.isPresent()) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette photo existe déjà");
-		} else {
-			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
-		}
+		return ResponseEntity.ok(photoRepository.save(photo));
 	}
 
 	@GetMapping("/all")

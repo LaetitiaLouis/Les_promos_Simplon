@@ -62,7 +62,6 @@ public class UtilisateurController {
 			return ResponseEntity.ok(users);
 		}
 	}
-	
 
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
@@ -140,7 +139,23 @@ public class UtilisateurController {
 
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		utilisateurs.addAll(utilisateurRepository.findByPrenom("%" + nomPrenom + "%"));
-		utilisateurs.addAll(utilisateurRepository.findByNom("%" + nomPrenom + "%"));
+		List<Utilisateur> userNom = utilisateurRepository.findByNom("%" + nomPrenom + "%");
+		
+		//ajout des utilisateurs qui ne sont pas encore présent dans le résultat de finByPrenom
+		int i;
+		boolean flagPresent=false;
+		for( Utilisateur currentUser: userNom)
+		{
+			for(i=0;i<utilisateurs.size();i++)
+			{
+				if(currentUser.getId() == utilisateurs.get(i).getId())
+					flagPresent=true;
+			}
+			if(flagPresent==false)
+				utilisateurs.add(currentUser);
+			
+		}
+		
 
 		if (utilisateurs.isEmpty()) {
 			return HttpResponse.NOT_FOUND;
@@ -148,12 +163,12 @@ public class UtilisateurController {
 			return ResponseEntity.ok(utilisateurs);
 		}
 	}
-	
+
 	@GetMapping("/pseudoExists")
 	public boolean checkIfPseudoExists(@RequestParam String pseudo) {
 		return utilisateurRepository.existsByPseudo(pseudo);
 	}
-	
+
 	@GetMapping("/emailExists")
 	public boolean checkIfEmailExists(@RequestParam String email) {
 		return utilisateurRepository.existsByEmail(email);

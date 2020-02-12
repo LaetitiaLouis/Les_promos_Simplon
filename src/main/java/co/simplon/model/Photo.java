@@ -25,6 +25,6 @@ public class Photo {
 	private LocalDate datePhoto;
 	private String imageUrl;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Utilisateur utilisateur;
 }

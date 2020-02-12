@@ -24,7 +24,7 @@ public class PhotoService {
 	public String save(MultipartFile file, Photo photo ) throws Exception {
 		File folders = new File(UPLOAD_DIR);
 		folders.mkdirs();
-		String nomPhoto = photo.getNom().replaceAll(" ", "_");
+		String nomPhoto = photo.getNom().replaceAll("[^A-Za-z0-9]", "_");
 		String fileName = photo.getId() + "_" + nomPhoto + ".jpg";	
 		Path copyLocation = Paths.get(UPLOAD_DIR + fileName);
 		Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);

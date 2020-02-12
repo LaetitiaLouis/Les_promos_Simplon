@@ -44,18 +44,23 @@ public class PhotoController {
 	@PostMapping("/upload")
 	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
 			@RequestParam int userId, @RequestParam boolean isProfile) {
+
 		try {
+			
 			Utilisateur user = utilisateurRepository.findById(userId).get();
 			Photo photo = photoRepository.findById(photoId).get();
-
 			photo.setUtilisateur(user);
+			
+			if(isProfile) photo.setNom(user.getPrenom());
+			
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
 
 			if (isProfile) {
+				photoRepository.delete(photoRepository.findByImageUrl(user.getAvatarUrl()).get());
 				user.setAvatarUrl(photo.getImageUrl());
 			}
-			System.out.println(user.getAvatarUrl());
+			
 			List<Photo> photos = user.getPhotos();
 			photos.add(photo);
 			user.setPhotos(photos);

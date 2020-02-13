@@ -36,7 +36,9 @@ public class Utilisateur {
 	private String nom;
 	private String prenom;
 	private LocalDate dateDeNaissance;
+	@Column(columnDefinition = "varchar(1000)")
 	private String presentation;
+	@Column(columnDefinition = "varchar(1000)")
 	private String commentaires;
 	@Column(unique = true)
 	private String pseudo;

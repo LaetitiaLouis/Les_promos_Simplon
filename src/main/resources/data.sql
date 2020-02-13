@@ -7,7 +7,9 @@ INSERT INTO role (libelle, admin) VALUES
 
 -- Utilisateurs
 INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentaires, email, mot_de_passe, pseudo, role_id, avatar_url)  VALUES 
-( 'maunier', 'cédric', '1983/05/05','passioné de dev','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1, 'http://localhost:8080/api/photos/download/1_Cédric.jpg' ),
+( 'maunier', 'cédric', '1983/05/05','Passionné par l\'informatique et la tech depuis toujours, j\'ai décidé de me reconvertir dans le développement: je me suis donc formé en autodidacte aux principaux langages web: HTML, CSS, JAVASCRIPT sur différentes plateforme d\'apprentissage(ex: FreeCodeCamp, YouTube ...).
+J\'héberge certains de mes projets sur Github et suis aujourd\'hui à même de concevoir tous types d\'applications Web avec ReactJS que je maîtrise depuis quelques mois.Je suis aussi à l\'aise avec les serveurs Linux que j\'utilise quotidiennement car la curiosité et mon côté geek m\'ont poussé à comprendre leur fonctionnement au fil du temps.
+Je me sens aujourd\'hui prêt à entrer dans le monde professionnel et transformer ma passion en métier. C\'est pourquoi je viens de créer ma micro\-entreprise afin de d\'obtenir mes premières missions en tant que freelance.','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1, 'http://localhost:8080/api/photos/download/1_Cédric.jpg' ),
 ( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2, 'http://localhost:8080/api/photos/download/avatar.png'),
 ( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1, 'http://localhost:8080/api/photos/download/2_Laëtitia.jpg'),
 ( 'Merchadou', 'Sébastien', '1984/02/20','cuisine','commentaire panda', 'merchadou.sebastien@gmail.com','mdpadmin','pandi', 1,'http://localhost:8080/api/photos/download/3_Sébastien.jpg' ),

@@ -57,7 +57,7 @@ INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values
 ('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8);
 
 --Lien Utilisateur/photos
-insert into utilisateur_photos (utilisateur_id, photos_id) values 
+insert into utilisateur_photos (utilisateur_id, photo_id) values 
 (1,1),
 (3,2),
 (4,3),

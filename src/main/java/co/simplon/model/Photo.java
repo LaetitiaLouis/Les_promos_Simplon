@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Photo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -24,7 +24,7 @@ public class Photo {
 	private String categorie;
 	private LocalDate datePhoto;
 	private String imageUrl;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne(cascade = CascadeType.MERGE)
 	private Utilisateur utilisateur;
 }

@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,8 +50,8 @@ public class Utilisateur {
 	@ManyToOne
 	private Role role;
 
-	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private List<Photo> photos = new ArrayList<>();
 
 	@ManyToMany

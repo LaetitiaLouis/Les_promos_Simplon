@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.HttpResponse;
+import co.simplon.model.Apprenant;
 import co.simplon.model.HobbyCompetenceLangage;
 import co.simplon.model.Projet;
+import co.simplon.repository.ApprenantRepository;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
@@ -27,9 +29,11 @@ import co.simplon.repository.ProjetRepository;
 @CrossOrigin("http://localhost:4200")
 public class ProjetController {
 
-	
 	@Autowired
 	ProjetRepository projetRepository;
+
+	@Autowired
+	ApprenantRepository apprenantRepository;
 
 	@Autowired
 	HobbyCompetenceLangageRepository hobbyRepository;
@@ -80,6 +84,21 @@ public class ProjetController {
 		Optional<HobbyCompetenceLangage> lang = hobbyRepository.findById(langage);
 		if (lang.isPresent()) {
 			List<Projet> projets = lang.get().getProjets();
+			if (projets.isEmpty()) {
+				return HttpResponse.NOT_FOUND;
+			} else {
+				return ResponseEntity.ok(projets);
+			}
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
+	}
+
+	@GetMapping("/findByIdApprenant")
+	public ResponseEntity<?> findByIdApprenant(@RequestParam int idApprenant) {
+		Optional<Apprenant> app = apprenantRepository.findById(idApprenant);
+		if (app.isPresent()) {
+			List<Projet> projets = app.get().getProjets();
 			if (projets.isEmpty()) {
 				return HttpResponse.NOT_FOUND;
 			} else {

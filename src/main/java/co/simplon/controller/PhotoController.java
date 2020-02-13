@@ -147,7 +147,12 @@ public class PhotoController {
 	}
 	
 	@DeleteMapping("/delete")
-	public void deletePhoto(@RequestParam int id) {
-		photoRepository.deleteById(id);
+	public ResponseEntity<?> deletePhoto(@RequestParam int id) {
+		if (photoRepository.existsById(id)) {
+			photoRepository.deleteById(id);
+			return ResponseEntity.ok("Votre photo est supprimée");
+		} else {
+			return HttpResponse.NOT_FOUND;
+		}
 	}
 }

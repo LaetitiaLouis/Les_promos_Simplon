@@ -18,8 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,12 +48,10 @@ public class Utilisateur {
 	@ManyToOne
 	private Role role;
 
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
 	private List<Photo> photos = new ArrayList<>();
 
 	@ManyToMany
-	@JsonIgnore
 	@JoinTable(name = "utilisateur_hobby", inverseJoinColumns = @JoinColumn(name = "hobby"))
 	private List<HobbyCompetenceLangage> hobbies = new ArrayList<>();
 }

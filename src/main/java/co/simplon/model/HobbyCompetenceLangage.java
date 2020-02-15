@@ -26,6 +26,7 @@ public class HobbyCompetenceLangage {
 	private String nom;
 	private String typeHobby;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "hobbies", cascade = CascadeType.MERGE)
 	private List<Utilisateur> utilisateurs = new ArrayList<>();
 	

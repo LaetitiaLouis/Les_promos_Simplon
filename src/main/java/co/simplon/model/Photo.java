@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +27,7 @@ public class Photo {
 	private LocalDate datePhoto;
 	private String imageUrl;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Utilisateur utilisateur;
 }

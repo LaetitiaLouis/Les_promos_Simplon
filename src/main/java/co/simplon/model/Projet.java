@@ -24,6 +24,7 @@ public class Projet {
 	@ManyToMany (mappedBy = "projets", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<HobbyCompetenceLangage> langages = new ArrayList<>();
 	
+
 	@ManyToMany(mappedBy = "projets", cascade = CascadeType.MERGE)
 	private List<Apprenant> apprenants = new ArrayList<>();
 }

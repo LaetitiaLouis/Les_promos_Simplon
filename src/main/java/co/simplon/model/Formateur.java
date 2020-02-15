@@ -10,8 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "utilisateur_id")
 public class Formateur extends Utilisateur {
 
-	@JsonProperty(access = Access.WRITE_ONLY)
+	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(joinColumns = @JoinColumn(name = "formateur_id"), inverseJoinColumns = @JoinColumn(name="promo_id"))
 	private List<Promo> promos = new ArrayList<>();

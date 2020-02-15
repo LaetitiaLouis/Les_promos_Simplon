@@ -48,7 +48,7 @@ INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values
 ('François','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/4_François.jpg',6),
 ('Sophie','profil', '2020/01/22', 'http://localhost:8080/api/photos/download/5_Sophie.jpg',7),
 ('La P4','groupe', '2020/01/22', 'http://localhost:8080/api/photos/download/6_La_P4.jpg',9),
-('Le jour du ministre','évenement', '2020/01/22', 'http://localhost:8080/api/photos/download/7_Le_jour_du_ministre.jpg',5),
+('Inauguration','groupe', '2020/01/22', 'http://localhost:8080/api/photos/download/7_Le_jour_du_ministre.jpg',5),
 ('Tous au bar','groupe', '2020/01/22', 'http://localhost:8080/api/photos/download/8_Tous_au_bar.jpg',2),
 ('Café & Stylo','travail', '2020/01/04', 'http://localhost:8080/api/photos/download/9_Café_&_Stylo.jpg',3),
 ('Outil de travail', 'travail', '2020/01/02', 'http://localhost:8080/api/photos/download/10_Outil_de_travail.jpg', 2),
@@ -56,21 +56,6 @@ INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values
 ('Maureen', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/12_Maureen.jpg', 9),
 ('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8);
 
---Lien Utilisateur/photos
-insert into utilisateur_photos (utilisateur_id, photo_id) values 
-(1,1),
-(3,2),
-(4,3),
-(6,4),
-(7,5),
-(9,6),
-(5,7),
-(2,8),
-(3,9),
-(2,10),
-(2,11),
-(9,12),
-(10,13);
 
 --Promo apprenant
 insert into apprenant_promo(promo_id, apprenant_id) values

@@ -43,7 +43,7 @@ public class PhotoController {
 
 	@PostMapping("/upload")
 	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
-			@RequestParam int userId, @RequestParam boolean isProfile) {
+			@RequestParam int userId) {
 
 		try {
 			
@@ -51,20 +51,17 @@ public class PhotoController {
 			Photo photo = photoRepository.findById(photoId).get();
 			photo.setUtilisateur(user);
 			
-			if(isProfile) photo.setNom(user.getPrenom());
+			if(photo.getCategorie().equals("profil")) photo.setNom(user.getPrenom());
 			
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
 
-			if (isProfile) {
+			if (photo.getCategorie().equals("profil")) {
 				photoRepository.delete(photoRepository.findByImageUrl(user.getAvatarUrl()).get());
 				user.setAvatarUrl(photo.getImageUrl());
+				utilisateurRepository.save(user);
 			}
 			
-			List<Photo> photos = user.getPhotos();
-			photos.add(photo);
-			user.setPhotos(photos);
-			utilisateurRepository.save(user);
 			photoRepository.save(photo);
 			return ResponseEntity.ok(photo);
 
@@ -85,7 +82,7 @@ public class PhotoController {
 		}
 	}
 
-	@GetMapping("/findByUser")
+	@GetMapping("/findByUserId")
 	public ResponseEntity<?> findByUser(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
 		if (utilisateur.isPresent()) {
@@ -99,6 +96,7 @@ public class PhotoController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
+	
 
 	@GetMapping("/findByCategorie")
 	public ResponseEntity<?> findByCategorie(@RequestParam String categorie) {
@@ -150,7 +148,7 @@ public class PhotoController {
 	public ResponseEntity<?> deletePhoto(@RequestParam int id) {
 		if (photoRepository.existsById(id)) {
 			photoRepository.deleteById(id);
-			return ResponseEntity.ok("Votre photo est supprimée");
+			return ResponseEntity.ok("Photo supprimée");
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}

@@ -10,10 +10,10 @@ INSERT INTO utilisateur (nom, prenom, date_de_naissance, presentation, commentai
 ( 'maunier', 'cédric', '1983/05/05','Passionné par l\'informatique et la tech depuis toujours, j\'ai décidé de me reconvertir dans le développement: je me suis donc formé en autodidacte aux principaux langages web: HTML, CSS, JAVASCRIPT sur différentes plateforme d\'apprentissage(ex: FreeCodeCamp, YouTube ...).
 J\'héberge certains de mes projets sur Github et suis aujourd\'hui à même de concevoir tous types d\'applications Web avec ReactJS que je maîtrise depuis quelques mois.Je suis aussi à l\'aise avec les serveurs Linux que j\'utilise quotidiennement car la curiosité et mon côté geek m\'ont poussé à comprendre leur fonctionnement au fil du temps.
 Je me sens aujourd\'hui prêt à entrer dans le monde professionnel et transformer ma passion en métier. C\'est pourquoi je viens de créer ma micro\-entreprise afin de d\'obtenir mes premières missions en tant que freelance.','Simple commentaire', 'cedric.maunier.lp4@gmail.com','changeme','drikc', 1, 'http://localhost:8080/api/photos/download/1_Cédric.jpg' ),
-( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2, 'http://localhost:8080/api/photos/download/avatar.png'),
+( 'tobelem', 'josselin','1984/12/01','formateur émérite','Commentaire de Josselin', 'jtobelem@simplon.co','password','jtobelem', 2, 'http://localhost:8080/api/photos/download/14_Josselin.jpg'),
 ( 'louis', 'laëtitia', '1979/06/12','véritable bordelaise','Commentaire de Laëtitia', 'laetitia.louis.lp4@gmail.com','motdepasse','léti', 1, 'http://localhost:8080/api/photos/download/2_Laëtitia.jpg'),
 ( 'Merchadou', 'Sébastien', '1984/02/20','cuisine','commentaire panda', 'merchadou.sebastien@gmail.com','mdpadmin','pandi', 1,'http://localhost:8080/api/photos/download/3_Sébastien.jpg' ),
-( 'Philipe', 'phil','1984/12/01','formateur émérite','Commentaire de Philippe', 'philippe@simplon.co','password','phil',2, 'http://localhost:8080/api/photos/download/avatar.png'),
+( 'Bouget', 'Philippe','1984/12/01','formateur émérite','Commentaire de Philippe', 'philippe@simplon.co','password','phil',2, 'http://localhost:8080/api/photos/download/15_Philippe.jpg'),
 ( 'StarJS', 'StarNode', '1979/06/12','véritable bcodeur','Commentaire de StarJS', 'StarJs.lp4@gmail.com','motdepasse','starjs', 1, 'http://localhost:8080/api/photos/download/4_François.jpg'),
 ( 'balcon', 'sophie', '1985/01/17','passioné de moto','Simple commentaire', 'sophie.balconlp4@gmail.com','changeme','sbalcon', 1, 'http://localhost:8080/api/photos/download/5_Sophie.jpg'),
 ( 'bensaid', 'Anissa','1989/12/01','Chef de projet','Commentaire d\'anissa', 'abensaid@simplon.co','password','abensaid', 2, 'http://localhost:8080/api/photos/download/13_Anissa.jpg'),
@@ -54,8 +54,9 @@ INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values
 ('Outil de travail', 'travail', '2020/01/02', 'http://localhost:8080/api/photos/download/10_Outil_de_travail.jpg', 2),
 ('Le nez dedans', 'travail', '2020/01/05','http://localhost:8080/api/photos/download/11_Le_nez_dedans.jpg', 2),
 ('Maureen', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/12_Maureen.jpg', 9),
-('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8);
-
+('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8),
+('Josselin', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/14_Josselin.jpg',2),
+('Philippe', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/15_Philippe.jpg',5);
 
 --Promo apprenant
 insert into apprenant_promo(promo_id, apprenant_id) values

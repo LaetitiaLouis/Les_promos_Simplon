@@ -16,23 +16,37 @@ import co.simplon.model.Photo;
 
 @Service
 public class PhotoService {
-	    
+
 	private final String SEPAR = File.separator;
 	private final String UPLOAD_DIR = System.getProperty("user.home") + SEPAR + "uploads" + SEPAR;
 
-
-	public String save(MultipartFile file, Photo photo ) throws Exception {
+	public String save(MultipartFile file, Photo photo) throws Exception {
 		File folders = new File(UPLOAD_DIR);
 		folders.mkdirs();
-		String nomPhoto = photo.getNom().replaceAll("[^A-Za-z0-9]", "_");
-		String fileName = photo.getId() + "_" + nomPhoto + ".jpg";	
+		String nomPhoto = photo.getNom().replaceAll("[^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ]", "_");
+		String fileName = photo.getId() + "_" + nomPhoto + ".jpg";
 		Path copyLocation = Paths.get(UPLOAD_DIR + fileName);
 		Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-		
+
 		return fileName;
 	}
 
 	public Resource getFile(String filename) throws MalformedURLException {
 		return new UrlResource("file:" + UPLOAD_DIR + filename);
+	}
+
+	public void deletePhoto(Photo photo)  {
+
+		try {
+			String filename = UPLOAD_DIR + photo.getImageUrl().replace("http://localhost:8080/api/photos/download/", "");
+			File file = new File(filename);
+			if(file.exists()) {
+				file.delete();
+			}
+
+		} catch (Exception e) {
+			return;
+		}
+
 	}
 }

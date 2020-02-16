@@ -51,7 +51,7 @@ public class PhotoController {
 			Photo photo = photoRepository.findById(photoId).get();
 			photo.setUtilisateur(user);
 			
-			if(photo.getCategorie().equals("profil")) photo.setNom(user.getPrenom());
+			if(photo.getCategorie().equals("profil")) photo.setNom(user.getPrenom() + " " + user.getNom());
 			
 			String filename = photoService.save(file, photo);
 			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
@@ -146,11 +146,15 @@ public class PhotoController {
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deletePhoto(@RequestParam int id) {
-		if (photoRepository.existsById(id)) {
-			photoRepository.deleteById(id);
-			return ResponseEntity.ok("Photo supprimée");
-		} else {
-			return HttpResponse.NOT_FOUND;
+		Photo photo = photoRepository.findById(id).get();
+		Utilisateur user = photo.getUtilisateur();
+		if(photo.getCategorie().equals("profil")) {
+			user.setAvatarUrl("http://localhost:8080/api/photos/download/avatar.png");
+			utilisateurRepository.save(user);
 		}
+		this.photoService.deletePhoto(photo);
+		this.photoRepository.deleteById(photo.getId());
+		return ResponseEntity.ok("Photo supprimée");
+
 	}
 }

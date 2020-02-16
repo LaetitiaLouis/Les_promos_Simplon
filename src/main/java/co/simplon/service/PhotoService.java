@@ -31,17 +31,19 @@ public class PhotoService {
 		return fileName;
 	}
 
-	public Resource getFile(String filename) throws MalformedURLException {
+	public Resource get(String filename) throws MalformedURLException {
 		return new UrlResource("file:" + UPLOAD_DIR + filename);
 	}
 
-	public void deletePhoto(Photo photo)  {
+	public void delete(Photo photo, String photoUrl)  {
 
 		try {
-			String filename = UPLOAD_DIR + photo.getImageUrl().replace("http://localhost:8080/api/photos/download/", "");
+			String filename = UPLOAD_DIR + photo.getImageUrl().replace(photoUrl, "");
 			File file = new File(filename);
 			if(file.exists()) {
 				file.delete();
+			} else {
+				System.out.println("Photo inexistante");
 			}
 
 		} catch (Exception e) {

@@ -41,27 +41,30 @@ public class PhotoController {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 
+	private final String PHOTOS_URL = "http://localhost:8080/api/photos/download/";
+
 	@PostMapping("/upload")
 	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
 			@RequestParam int userId) {
 
 		try {
-			
 			Utilisateur user = utilisateurRepository.findById(userId).get();
 			Photo photo = photoRepository.findById(photoId).get();
 			photo.setUtilisateur(user);
-			
-			if(photo.getCategorie().equals("profil")) photo.setNom(user.getPrenom() + " " + user.getNom());
-			
+
+			if (photo.getCategorie().equals("profil"))
+				photo.setNom(user.getPrenom() + " " + user.getNom());
+
 			String filename = photoService.save(file, photo);
-			photo.setImageUrl("http://localhost:8080/api/photos/download/" + filename);
+			photo.setImageUrl(PHOTOS_URL + filename);
 
 			if (photo.getCategorie().equals("profil")) {
 				photoRepository.delete(photoRepository.findByImageUrl(user.getAvatarUrl()).get());
 				user.setAvatarUrl(photo.getImageUrl());
 				utilisateurRepository.save(user);
+				photoService.delete(photo, PHOTOS_URL);
 			}
-			
+
 			photoRepository.save(photo);
 			return ResponseEntity.ok(photo);
 
@@ -96,7 +99,6 @@ public class PhotoController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-	
 
 	@GetMapping("/findByCategorie")
 	public ResponseEntity<?> findByCategorie(@RequestParam String categorie) {
@@ -111,7 +113,7 @@ public class PhotoController {
 	@GetMapping("/download/{filename}")
 	public ResponseEntity<?> getImage(@PathVariable String filename) {
 		try {
-			Resource file = photoService.getFile(filename);
+			Resource file = photoService.get(filename);
 			return ResponseEntity.ok(file);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,16 +145,16 @@ public class PhotoController {
 			return ResponseEntity.ok(photos);
 		}
 	}
-	
+
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deletePhoto(@RequestParam int id) {
 		Photo photo = photoRepository.findById(id).get();
 		Utilisateur user = photo.getUtilisateur();
-		if(photo.getCategorie().equals("profil")) {
-			user.setAvatarUrl("http://localhost:8080/api/photos/download/avatar.png");
+		if (photo.getCategorie().equals("profil")) {
+			user.setAvatarUrl(PHOTOS_URL + "avatar.png");
 			utilisateurRepository.save(user);
 		}
-		this.photoService.deletePhoto(photo);
+		this.photoService.delete(photo, PHOTOS_URL);
 		this.photoRepository.deleteById(photo.getId());
 		return ResponseEntity.ok("Photo supprimée");
 

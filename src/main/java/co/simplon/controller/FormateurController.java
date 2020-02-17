@@ -43,7 +43,6 @@ public class FormateurController {
 	@Autowired
 	RoleRepository roleRepository;
 
-	
 	/**
 	 * Enregistrer un nouveau formmateur
 	 * @param L'objet formateur dans le body de la requète
@@ -60,7 +59,6 @@ public class FormateurController {
 		}
 
 	}
-
 	/**
 	 * Obtenir un formateur par id
 	 * @param L'id du formateur en paramètre de la requète
@@ -75,7 +73,6 @@ public class FormateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
 	/**
 	 * Obtenir la liste de tout les formateurs
 	 * @return La liste des formateurs si elle n'est pas vide 
@@ -92,8 +89,8 @@ public class FormateurController {
 	}
 	/**
 	 * Obtenir un formateur par pseudo
-	 * @param pseudo
-	 * @return
+	 * @param Le pseudo du formateur en paramètre de la requète
+	 * @return Le formateur si il existe sinon un message et une erreur 404 
 	 */
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
@@ -104,7 +101,11 @@ public class FormateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	/**
+	 * Obtenir un formateur par promo
+	 * @param Le nom de la promo en paramètre de la requète
+	 * @return Le formateur si il existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByPromo")
 	public ResponseEntity<?> findByPromo(@RequestParam String promo) {
 		Optional<Promo> p = promoRepository.findById(promo);
@@ -119,7 +120,12 @@ public class FormateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	/**
+	 * Modifier un formateur
+	 * @param L'objet formateur dans le body de la requète
+	 * @return L'objet formateur modifié ou une erreur 404 
+	 * et un message si il n'a pas été trouvé en base de donnée
+	 */
 	@PutMapping("/update")
 	public @ResponseBody ResponseEntity<?> update(@RequestBody Formateur formateur) {
 		Optional<Formateur> maybeFormateur = formateurRepository.findById(formateur.getId());
@@ -129,4 +135,5 @@ public class FormateurController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ce formateur n'existe pas");
 		}
 	}
+	
 }

@@ -24,6 +24,11 @@ import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 import co.simplon.repository.UtilisateurRepository;
 
+/**
+ * Controlleur définissant les endpoints concernant l'entité HobbyCompetenceLangage
+ * @author Laëtitia, Sébastien et Cédric
+ *
+ */
 @RestController
 @RequestMapping("/api/hobbies")
 @CrossOrigin("http://localhost:4200")
@@ -39,16 +44,30 @@ public class HobbyController {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 
+	/**
+	 * Enregistrement d'un nouveau hobby
+	 * @param Le hobby dans le body de la requète
+	 * @return L'objet hobby crée
+	 */
 	@PostMapping("/new")
 	public @ResponseBody HobbyCompetenceLangage create(@RequestBody HobbyCompetenceLangage hobby) {
 		return hobbyCompetenceLangageRepository.save(hobby);
 	}
-
+	
+	/**
+	 * Modifier un hobby
+	 * @param Le nouveau hobby dans le body de la requète 
+	 * @return L'objet hobby modifié
+	 */
 	@PutMapping("/update")
 	public @ResponseBody HobbyCompetenceLangage update(@RequestBody HobbyCompetenceLangage hobby) {
 		return hobbyCompetenceLangageRepository.save(hobby);
 	}
-
+	
+	/**
+	 * Obtenir la liste de tout les hobbies
+	 * @return La liste des hobbies si elle n'est pas vide sinon un message et une erreur 404
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll() {
 		List<HobbyCompetenceLangage> hobbies = (List<HobbyCompetenceLangage>) hobbyCompetenceLangageRepository
@@ -59,10 +78,16 @@ public class HobbyController {
 			return ResponseEntity.ok(hobbies);
 		}
 	}
-
+	
+	/**
+	 * Obtenir les hobbies d'un utilisateur
+	 * @param L'id de l'utilisateur en paramètre de la requète
+	 * @return Une liste des hobbies de l'utilisateur si l'utilisateur 
+	 * existe et qu'il a bien des hobbies sinon une erreur 404 et un message
+	 */
 	@GetMapping("/findByUtilisateur")
-	public ResponseEntity<?> findByUtilisateur(@RequestParam Integer utilisateur) {
-		Optional<Utilisateur> user = utilisateurRepository.findById(utilisateur);
+	public ResponseEntity<?> findByUtilisateur(@RequestParam int id) {
+		Optional<Utilisateur> user = utilisateurRepository.findById(id);
 		if (user.isPresent()) {
 			List<HobbyCompetenceLangage> hobbies = user.get().getHobbies();
 			if (hobbies.isEmpty()) {
@@ -74,7 +99,12 @@ public class HobbyController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Obtenir un hobby par nomm
+	 * @param Le nom du hobby en paramètre de la requète
+	 * @return Le hobby si il existe sinon une erreur 404 et un message
+	 */
 	@GetMapping("/findByNom")
 	public ResponseEntity<?> findByNom(@RequestParam String nom) {
 		Optional<HobbyCompetenceLangage> hobby = hobbyCompetenceLangageRepository.findById(nom);
@@ -84,7 +114,13 @@ public class HobbyController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Obtenir les langages d'un projet
+	 * @param Le nom du projet en paramètre de la requète
+	 * @return La liste des langages du projet si elle n'est pas vide 
+	 * et si le projet existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByProjet")
 	public ResponseEntity<?> findByProjet(@RequestParam String projet) {
 		Optional<Projet> project = projetRepository.findById(projet);

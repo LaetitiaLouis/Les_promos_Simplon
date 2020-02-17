@@ -24,6 +24,11 @@ import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.PhotoRepository;
 import co.simplon.repository.UtilisateurRepository;
 
+/**
+ * Controlleur définissant les endpoints concernant l'entité  utilisateurs
+ * @author Laëtitia, Sébastien et Cédric
+ *
+ */
 @RestController
 @RequestMapping("/api/utilisateurs")
 @CrossOrigin("http://localhost:4200")
@@ -43,6 +48,11 @@ public class UtilisateurController {
 		utilisateurRepository.deleteById(id);
 	}
 
+	/**
+	 * Obtenir un utilisateur par id
+	 * @param L'id de l'apprenant en paramètre de la requète
+	 * @return L'apprenant si il existe ou une erreur 404 et un message
+	 */
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
@@ -52,7 +62,10 @@ public class UtilisateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	/**
+	 * Obtenir la liste de tous les utilisateurs
+	 * @return La liste si elle n'est pas vide sinon une erreur 404 et un message
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllUsers() {
 		List<Utilisateur> users = (List<Utilisateur>) utilisateurRepository.findAll();
@@ -63,6 +76,11 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * Obtenir un utilisateurs par pseudo 
+	 * @param Le pseudo en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 et un message
+	 */
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findByPseudo(pseudo);
@@ -72,7 +90,12 @@ public class UtilisateurController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Obtenir un utilisateurs par l'id d'une photo 
+	 * @param l'id d'une photo en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 et un message
+	 */
 	@GetMapping("/findByPhoto")
 	public ResponseEntity<?> findByPhoto(@RequestParam int id) {
 		Optional<Photo> photo = photoRepository.findById(id);
@@ -82,8 +105,13 @@ public class UtilisateurController {
 		} else {
 			return HttpResponse.NOT_FOUND;
 		}
-	}
-
+	}	
+	
+	/**
+	 * Obtenir un utilisateurs par Hobby/Compétence ou langage 
+	 * @param Le nom d'un hobby en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 et un message
+	 */
 	@GetMapping("/findByHobby")
 	public ResponseEntity<?> findByHobby(@RequestParam String hobby) {
 		Optional<HobbyCompetenceLangage> h = hobbyCompetenceLangageRepository.findById(hobby);
@@ -99,6 +127,12 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * connect un utilisateur
+	 * @param L'objet utilisateur dans le body de la requète
+	 * @return L'objet crée ou une erreur 409 et un message 
+	 * si le pseudo et le mot de passe sont correct 
+	 */
 	@PostMapping("/connect")
 	public ResponseEntity<?> connection(@RequestBody Utilisateur utilisateur) {
 		Optional<Utilisateur> user = utilisateurRepository.findByPseudo(utilisateur.getPseudo());
@@ -114,6 +148,11 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * Obtenir un utilisateurs par nom 
+	 * @param Le nom, complet ou incomplet d'un utilisateur en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 
+	 */
 	@GetMapping("/findByNom")
 	public ResponseEntity<?> findByNom(@RequestParam String nom) {
 		List<Utilisateur> utilisateurs = utilisateurRepository.findByNom(nom);
@@ -124,6 +163,11 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * Obtenir un utilisateurs par prenom 
+	 * @param Le prenom, complet ou incomplet d'un utilisateur en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 
+	 */
 	@GetMapping("/findByPrenom")
 	public ResponseEntity<?> findByPrenom(@RequestParam String prenom) {
 		List<Utilisateur> utilisateurs = utilisateurRepository.findByPrenom(prenom);
@@ -134,6 +178,11 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * Obtenir un utilisateurs par nom ou prenom 
+	 * @param Le nom ou un prenom, complet ou incomplet d'un utilisateur en paramètre de la requète
+	 * @return L'utilisateur si il existe sinon une erreur 404 
+	 */
 	@GetMapping("/findByNomPrenom")
 	public ResponseEntity<?> findByNomPrenom(@RequestParam String nomPrenom) {
 
@@ -164,11 +213,21 @@ public class UtilisateurController {
 		}
 	}
 
+	/**
+	 * Vérifie si un utilisateur avec le pseudo donné existe
+	 * @param Le pseudo d'un utilisateur en paramètre de la requète
+	 * @return true si il existe sinon false
+	 */
 	@GetMapping("/pseudoExists")
 	public boolean checkIfPseudoExists(@RequestParam String pseudo) {
 		return utilisateurRepository.existsByPseudo(pseudo);
 	}
 
+	/**
+	 * Vérifie si un utilisateur avec l'email donné existe
+	 * @param l'email d'un utilisateur en paramètre de la requète
+	 * @return true si il existe sinon false
+	 */
 	@GetMapping("/emailExists")
 	public boolean checkIfEmailExists(@RequestParam String email) {
 		return utilisateurRepository.existsByEmail(email);

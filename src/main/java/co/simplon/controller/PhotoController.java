@@ -43,6 +43,14 @@ public class PhotoController {
 
 	private final String PHOTOS_URL = "http://localhost:8080/api/photos/download/";
 
+	/**
+	 * Enregistre une photo sur le disque dur
+	 * @param Le fichier photo à enregistrer en paramètre de la requète
+	 * @param L'id de la photo en paramètre de la requète
+	 * @param L'id de l'utilisateur en paramètre de la requète
+	 * @return L'objet photo si l'enregistrement s'est bien déroulé 
+	 * sinon un message et une erreur 500
+	 */
 	@PostMapping("/upload")
 	public ResponseEntity<?> saveImage(@RequestParam MultipartFile file, @RequestParam int photoId,
 			@RequestParam int userId) {
@@ -75,6 +83,11 @@ public class PhotoController {
 
 	}
 
+	/**
+	 * Obtenir un objet photo par id 
+	 * @param L'id de la photo en paramètre de la requète 
+	 * @return La photo si elle existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Photo> photo = photoRepository.findById(id);
@@ -84,7 +97,13 @@ public class PhotoController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Obtenir les photos d'un utilisateur
+	 * @param L'id de l'utilisateur en paramètre de la requète 
+	 * @return Les photos de l'utilisateur si il existe et si 
+	 * il en possède et sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByUserId")
 	public ResponseEntity<?> findByUser(@RequestParam int id) {
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(id);
@@ -99,7 +118,12 @@ public class PhotoController {
 			return HttpResponse.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Obtenir la liste des photos d'une catégorie
+	 * @param Le nom de la catégorie en paramètre de la requète
+	 * @return La liste des photos si elle n'est pas vide sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByCategorie")
 	public ResponseEntity<?> findByCategorie(@RequestParam String categorie) {
 		List<Photo> photos = photoRepository.findByCategorie(categorie);
@@ -110,6 +134,11 @@ public class PhotoController {
 		}
 	}
 
+	/**
+	 * Télécharger un fichier image 
+	 * @param Le nom du fichier
+	 * @return Le fichier si il existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/download/{filename}")
 	public ResponseEntity<?> getImage(@PathVariable String filename) {
 		try {
@@ -121,6 +150,11 @@ public class PhotoController {
 		}
 	}
 
+	/**
+	 * Modifier un objet photo
+	 * @param Le nouvel objet photo dans le body de la requète
+	 * @return L'objet photo modifié si il existe sinon un message et une erreur 404
+	 */
 	@PutMapping("/update")
 	public @ResponseBody ResponseEntity<?> update(@RequestBody Photo photo) {
 		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
@@ -131,11 +165,20 @@ public class PhotoController {
 		}
 	}
 
+	/**
+	 * Enregistrer un objet photo
+	 * @param L'objet photo dans le body de la requète 
+	 * @return L'objet photo crée
+	 */
 	@PostMapping("/new")
 	public @ResponseBody ResponseEntity<?> create(@RequestBody Photo photo) {
 		return ResponseEntity.ok(photoRepository.save(photo));
 	}
 
+	/**
+	 * Obtenir la liste de toutes les photos
+	 * @return La liste des photos si elle n'est pas vide sinon un message et une erreur 404
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> getAll() {
 		List<Photo> photos = (List<Photo>) photoRepository.findAll();
@@ -146,6 +189,11 @@ public class PhotoController {
 		}
 	}
 
+	/**
+	 * Supprimer une photo par id
+	 * @param L'id de la photo à supprimer 
+	 * @return Un message de confirmation
+	 */
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deletePhoto(@RequestParam int id) {
 		Photo photo = photoRepository.findById(id).get();

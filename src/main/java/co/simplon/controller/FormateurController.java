@@ -23,6 +23,12 @@ import co.simplon.repository.FormateurRepository;
 import co.simplon.repository.PromoRepository;
 import co.simplon.repository.RoleRepository;
 
+
+/**
+ * Controlleur définissant les endpoints concernant l'entité Formateur
+ * @author Laëtitia, Sébastien et Cédric
+ *
+ */
 @RestController
 @RequestMapping("/api/formateurs")
 @CrossOrigin("http://localhost:4200")
@@ -37,6 +43,12 @@ public class FormateurController {
 	@Autowired
 	RoleRepository roleRepository;
 
+	
+	/**
+	 * Enregistrer un nouveau formmateur
+	 * @param L'objet formateur dans le body de la requète
+	 * @return L'objet crée ou une erreur 409 si le pseudo existe déjà
+	 */
 	@PostMapping("/new")
 	public ResponseEntity<?> create(@RequestBody Formateur formateur) {
 		formateur.setRole(roleRepository.findById(2).get());
@@ -49,6 +61,11 @@ public class FormateurController {
 
 	}
 
+	/**
+	 * Obtenir un formateur par id
+	 * @param L'id du formateur en paramètre de la requète
+	 * @return Le formateur si il existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam int id) {
 		Optional<Formateur> formateur = formateurRepository.findById(id);
@@ -59,6 +76,11 @@ public class FormateurController {
 		}
 	}
 
+	/**
+	 * Obtenir la liste de tout les formateurs
+	 * @return La liste des formateurs si elle n'est pas vide 
+	 * sinon un message et une erreur 404
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll() {
 		List<Formateur> formateurs = (List<Formateur>) formateurRepository.findAll();
@@ -68,7 +90,11 @@ public class FormateurController {
 			return ResponseEntity.ok(formateurs);
 		}
 	}
-
+	/**
+	 * Obtenir un formateur par pseudo
+	 * @param pseudo
+	 * @return
+	 */
 	@GetMapping("/findByPseudo")
 	public ResponseEntity<?> findByPseudo(@RequestParam String pseudo) {
 		Optional<Formateur> formateur = formateurRepository.findByPseudo(pseudo);

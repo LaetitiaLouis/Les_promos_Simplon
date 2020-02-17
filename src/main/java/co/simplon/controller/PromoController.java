@@ -23,6 +23,10 @@ public class PromoController {
 	@Autowired
 	PromoRepository promoRepository;
 
+	/**
+	 * Obtenir la liste de toutes les promos
+	 * @return La liste si elle n'est pas vide sinon une erreur 404 et un message
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> getAll() {
 		List<Promo> promos = (List<Promo>) promoRepository.findAll();
@@ -32,7 +36,12 @@ public class PromoController {
 			return ResponseEntity.ok(promos);
 		}
 	}
-
+	
+	/**
+	 * Obtenir une promo par son nom
+	 * @param L'id de la promo en paramètre de la requète
+	 * @return La promo si il existe ou une erreur 404
+	 */
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam String nom) {
 		Optional<Promo> promo = promoRepository.findById(nom);

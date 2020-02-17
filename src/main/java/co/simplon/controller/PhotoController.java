@@ -27,6 +27,12 @@ import co.simplon.repository.PhotoRepository;
 import co.simplon.repository.UtilisateurRepository;
 import co.simplon.service.PhotoService;
 
+/**
+ * Controlleur définissant les endpoints concernant l'entité Photo 
+ * ainsi que les téléchargements/uploads de fichiers photo
+ * @author Laëtitia, Sébastien et Cédric
+ *
+ */
 @RestController
 @RequestMapping("/api/photos")
 @CrossOrigin("http://localhost:4200")
@@ -205,6 +211,5 @@ public class PhotoController {
 		this.photoService.delete(photo, PHOTOS_URL);
 		this.photoRepository.deleteById(photo.getId());
 		return ResponseEntity.ok("Photo supprimée");
-
 	}
 }

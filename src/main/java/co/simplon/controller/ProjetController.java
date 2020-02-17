@@ -24,6 +24,11 @@ import co.simplon.repository.ApprenantRepository;
 import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.ProjetRepository;
 
+/**
+ * Controlleur définissant les endpoints concernant l'entité Projet
+ * @author Laëtitia, Sébastien et Cédric
+ *
+ */
 @RestController
 @RequestMapping("/api/projets")
 @CrossOrigin("http://localhost:4200")
@@ -38,6 +43,10 @@ public class ProjetController {
 	@Autowired
 	HobbyCompetenceLangageRepository hobbyRepository;
 
+	/**
+	 * Obtenir la liste de tous les projets
+	 * @return La liste de tout les projets si elle n'est pas vide sinon un message et une erreur 404
+	 */
 	@GetMapping("/all")
 	public ResponseEntity<?> findAll() {
 		List<Projet> projets = (List<Projet>) projetRepository.findAll();
@@ -48,6 +57,11 @@ public class ProjetController {
 		}
 	}
 
+	/**
+	 * Modifier un projet   
+	 * @param L'objet projet modifié en paramètre de la requète 
+	 * @return Le projet modifié si il existe sinon un message et une erreur 404
+	 */
 	@PutMapping("/update")
 	public @ResponseBody ResponseEntity<?> update(@RequestBody Projet projet) {
 		Optional<Projet> maybeProjet = projetRepository.findById(projet.getNom());
@@ -58,6 +72,11 @@ public class ProjetController {
 		}
 	}
 
+	/**
+	 * Enregistrer un projet
+	 * @param Le projet dans le body de la requète
+	 * @return Le projet crée si il n'existe pas déjà sinon un message et une erreur 404
+	 */
 	@PostMapping("/new")
 	public @ResponseBody ResponseEntity<?> create(@RequestBody Projet projet) {
 		Optional<Projet> maybeProjet = projetRepository.findById(projet.getNom());
@@ -69,6 +88,11 @@ public class ProjetController {
 
 	}
 
+	/**
+	 * Trouver un projet par nom
+	 * @param Le nom du projet en paramètre de la requète
+	 * @return Le projet si il existe sinon un messsage et une erreur 404
+	 */
 	@GetMapping("/findById")
 	public ResponseEntity<?> findById(@RequestParam String nom) {
 		Optional<Projet> projet = projetRepository.findById(nom);
@@ -79,6 +103,12 @@ public class ProjetController {
 		}
 	}
 
+	/**
+	 * Obtenir les projets utilisant un langage donné
+	 * @param Le nom du langage 
+	 * @return Une liste de projets si elle n'est pas vide et 
+	 * que le langage existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByLangage")
 	public ResponseEntity<?> findByLangage(@RequestParam String langage) {
 		Optional<HobbyCompetenceLangage> lang = hobbyRepository.findById(langage);
@@ -94,6 +124,12 @@ public class ProjetController {
 		}
 	}
 
+	/**
+	 * Obtenir les projets d'un apprenant
+	 * @param L'id de l'apprenant en paramètre de la requète
+	 * @return Une liste de projets si elle n'est pas vide et 
+	 * que l'utilisateur existe sinon un message et une erreur 404
+	 */
 	@GetMapping("/findByIdApprenant")
 	public ResponseEntity<?> findByIdApprenant(@RequestParam int idApprenant) {
 		Optional<Apprenant> app = apprenantRepository.findById(idApprenant);

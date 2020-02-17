@@ -24,6 +24,7 @@ import co.simplon.repository.HobbyCompetenceLangageRepository;
 import co.simplon.repository.PhotoRepository;
 import co.simplon.repository.UtilisateurRepository;
 
+
 /**
  * Controlleur définissant les endpoints concernant l'entité  utilisateurs
  * @author Laëtitia, Sébastien et Cédric

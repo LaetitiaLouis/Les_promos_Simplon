@@ -75,14 +75,12 @@ public class PhotoController {
 			if (photo.getCategorie().equals("profil")) { 
 				Optional<Photo> currentUserPhoto = photoRepository.findByImageUrl(user.getAvatarUrl());
 				if(currentUserPhoto.isPresent()) {                     // si la photo de profil n'est pas l'avatar alors elle est dans le repository
-					photoRepository.delete(currentUserPhoto.get());
-					photoService.delete(photo, PHOTOS_URL);
+					photoRepository.delete(currentUserPhoto.get());    // et on peut la supprimer
+					photoService.delete(currentUserPhoto.get(), PHOTOS_URL);	
 				}
-
 				user.setAvatarUrl(photo.getImageUrl());
 				utilisateurRepository.save(user);
 			}
-
 			photoRepository.save(photo);
 			return ResponseEntity.ok(photo);
 

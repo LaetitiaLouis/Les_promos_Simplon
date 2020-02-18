@@ -62,21 +62,25 @@ public class PhotoController {
 			@RequestParam int userId) {
 
 		try {
-			Utilisateur user = utilisateurRepository.findById(userId).get();
+			Utilisateur user = utilisateurRepository.findById(userId).get(); 
 			Photo photo = photoRepository.findById(photoId).get();
-			photo.setUtilisateur(user);
+			photo.setUtilisateur(user); // définir à qui appartient la photo
 
-			if (photo.getCategorie().equals("profil"))
+			if (photo.getCategorie().equals("profil")) // si c'est une photo de profil, lui donner le nom de l'utilisateur
 				photo.setNom(user.getPrenom() + " " + user.getNom());
 
-			String filename = photoService.save(file, photo);
+			String filename = photoService.save(file, photo); // sauvegarde et récupération du nom de fichier pour construire l'url					
 			photo.setImageUrl(PHOTOS_URL + filename);
 
-			if (photo.getCategorie().equals("profil")) {
-				photoRepository.delete(photoRepository.findByImageUrl(user.getAvatarUrl()).get());
+			if (photo.getCategorie().equals("profil")) { 
+				Optional<Photo> currentUserPhoto = photoRepository.findByImageUrl(user.getAvatarUrl());
+				if(currentUserPhoto.isPresent()) {                     // si la photo de profil n'est pas l'avatar alors elle est dans le repository
+					photoRepository.delete(currentUserPhoto.get());
+					photoService.delete(photo, PHOTOS_URL);
+				}
+
 				user.setAvatarUrl(photo.getImageUrl());
 				utilisateurRepository.save(user);
-				photoService.delete(photo, PHOTOS_URL);
 			}
 
 			photoRepository.save(photo);
@@ -174,11 +178,17 @@ public class PhotoController {
 	/**
 	 * Enregistrer un objet photo
 	 * @param L'objet photo dans le body de la requète 
-	 * @return L'objet photo crée
+	 * @return L'objet photo crée si l'id n'existe pas sinon un message et une erreur 409
 	 */
 	@PostMapping("/new")
 	public @ResponseBody ResponseEntity<?> create(@RequestBody Photo photo) {
-		return ResponseEntity.ok(photoRepository.save(photo));
+		Optional<Photo> maybePhoto = photoRepository.findById(photo.getId());
+		if(maybePhoto.isPresent()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette photo existe déjà");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(photoRepository.save(photo));
+		}
+
 	}
 
 	/**

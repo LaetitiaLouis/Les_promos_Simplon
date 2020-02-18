@@ -17,7 +17,8 @@ Je me sens aujourd\'hui prêt à entrer dans le monde professionnel et transform
 ( 'StarJS', 'StarNode', '1979/06/12','véritable bcodeur','Commentaire de StarJS', 'StarJs.lp4@gmail.com','motdepasse','starjs', 1, 'http://localhost:8080/api/photos/download/4_François.jpg'),
 ( 'balcon', 'sophie', '1985/01/17','passioné de moto','Simple commentaire', 'sophie.balconlp4@gmail.com','changeme','sbalcon', 1, 'http://localhost:8080/api/photos/download/5_Sophie.jpg'),
 ( 'bensaid', 'Anissa','1989/12/01','Chef de projet','Commentaire d\'anissa', 'abensaid@simplon.co','password','abensaid', 2, 'http://localhost:8080/api/photos/download/13_Anissa.jpg'),
-( 'unknown', 'Maureen', '1979/06/12','tettetetetessssttt','Commentaireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'commentaire.lp4@gmail.com','motdepasse','commentaire', 1, 'http://localhost:8080/api/photos/download/12_Maureen.jpg');
+( 'unknown', 'Maureen', '1979/06/12','Présenationnnnnnnnnnnnnnnnnnn','Commentairessssssssssssssssss', 'maureen.lp4@gmail.com','motdepasse', 'maumau', 1, 'http://localhost:8080/api/photos/download/12_Maureen.jpg'),
+( 'nom', 'Jules', '1990/06/12','test','Commentair', 'jules@simplon.co','motdepasse','commentaire', 1, 'http://localhost:8080/api/photos/download/16_Jules.jpg');
 
 -- Promos
 insert into promo (nom, annee_fin, specialite) values 
@@ -38,7 +39,7 @@ INSERT INTO apprenant (entite_affectation, utilisateur_id, promo_nom) VALUES
 
 
 -- Formateurs
-INSERT INTO formateur (utilisateur_id) VALUES (2),(5),(8);
+INSERT INTO formateur (utilisateur_id) VALUES (2),(5),(8),(10);
 
 --Photos
 INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values 
@@ -56,7 +57,8 @@ INSERT into photo (nom, categorie, date_photo, image_url,utilisateur_id) values
 ('Maureen', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/12_Maureen.jpg', 9),
 ('Anissa', 'profil', '2020/01/05','http://localhost:8080/api/photos/download/13_Anissa.jpg', 8),
 ('Josselin', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/14_Josselin.jpg',2),
-('Philippe', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/15_Philippe.jpg',5);
+('Philippe', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/15_Philippe.jpg',5),
+('Jules', 'profil', '2020/02/05', 'http://localhost:8080/api/photos/download/16_Jules.jpg',10);
 
 --Promo apprenant
 insert into apprenant_promo(promo_id, apprenant_id) values
@@ -73,6 +75,8 @@ insert into formateur_promos(promo_id, formateur_id) values
 ('LP3', 2),
 ('LP4', 5),
 ('LP4', 8),
+('LP4', 10),
+('LP3', 10),
 ('LP3', 5);
 
 --Projet
@@ -115,6 +119,7 @@ insert into apprenant_projet (apprenant_id, projet_id) values
 (7, 'IA'),
 (1, 'Injections SQL'),
 (3, 'Injections SQL');
+
 --Projet langages
 insert into langage_projet (projet_id, langage_id) values
 ('Fil-rouge', 'Java'),

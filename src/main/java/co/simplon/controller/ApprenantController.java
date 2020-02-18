@@ -60,7 +60,7 @@ public class ApprenantController {
 		if (maybeApprenant.isPresent()) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Ce pseudo est déjà utilisé");
 		} else {
-			return ResponseEntity.status(HttpStatus.CREATED).body(apprenant);
+			return ResponseEntity.status(HttpStatus.CREATED).body(apprenantRepository.save(apprenant));
 		}
 	}
 
